@@ -1,0 +1,52 @@
+
+# Inference opts
+seed: 128  # 随机数种子
+device: 'cuda:0'  # GPU设备
+img_read_method: 'rgb'  # 使用哪种方式读取图像，支持 gray、rgb、unchanged
+use_frame_align: False  # 是否使用帧对齐
+use_second_classify: False  # 是否使用二级分类器
+second_classify_method: 'filter_pos'  # 二级分类器方法，支持 filter_conf（使用一二级conf相乘）、filter_pos（直接使用二级分类器判断正负样本）
+conf_threshold: 0.005  # 一级检测器和二级分类器置信度相乘的阈值
+align_predictor_yaml: ./air_track/aligner/config/predict.yaml  # 帧对齐预测配置文件
+detect_predictor_yaml: ./air_track/detector/config/predict_dalachi_0615.yaml  # 检测器预测配置文件
+classify_predictor_yaml: ./air_track/classifier/config/predict.yaml  # 分类器预测配置文件
+
+# 数据集路径及文件类型
+dataset_params:
+  data_dir: '/home/csz_changsha/data/yanqing_data/0615_focal_20'
+  img_folder: 'rgb'  # 完整路径为data_dir/stage/Images
+  label_folder: 'label'  # 完整路径为data_dir/stage/labels
+  img_format: '.jpg'
+  gt_format: '.txt'
+
+  stage_train: 'train'
+  stage_valid: 'val'
+  stage_test: 'test'
+  classes: [
+    'himars_laucher',
+    'hismars_carrier',
+    'jinbei',
+    'jinbei-fake',
+    'haimars_laucher-fake',
+    'car',
+    'LT-2000',
+    'tianbing-fasheche',
+    'aiguozhe-fasheche',
+    'tiangong-fasheche',
+    'tianbing-leidache',
+    'aiguozhe-leidache',
+    'tiangong-leidache',
+    'tianbing-zhihuiche',
+    'aiguozhe-zhihuiche',
+    'tiangong-zhihuiche',
+    'hanma'
+  ]
+  # 目标类别数
+  nb_classes: 17
+
+  # 测试集划分
+  part_val: ['1']
+  part_test: ['1']
+#  part_test: ['1', '2', '3', '4']
+  img_size: [960, 540]  # 输入图像尺寸(w, h)
+  max_pixel: 255  # 图像最大像素数

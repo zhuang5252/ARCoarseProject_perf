@@ -1,0 +1,151 @@
+{
+  "part_train": {
+    "JDModel_normal_0827_M300_background_1_merge_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0906_dlc_filter_no_benchang_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0907_dlk_filter_merge_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_paste_0823_0827_M300_background_1_merge_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_paste_0823_0906_dlc_filter_no_benchang_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_paste_0823_0907_dlk_filter_merge_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0906_background_choosed_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_20250906_out_merge_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0911_FC30_filter_background_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0911_FC30_filter_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0912_JD_209_filter_background_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0912_JD_209_filter_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0913_FC30_filter_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0914_FC30_filter_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0915_M300_filter_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0917_FC30_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0917_JD_background_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0917_JD_filter_second": {
+      "nums": 100000000,
+      "shuffle": true
+    }
+  },
+  "part_val": {
+    "JDModel_normal_0827_M300_background_1_merge_second": {
+      "nums": 5000,
+      "shuffle": true
+    },
+    "JDModel_normal_0906_dlc_filter_no_benchang_second": {
+      "nums": 5000,
+      "shuffle": true
+    },
+    "JDModel_normal_0907_dlk_filter_merge_second": {
+      "nums": 5000,
+      "shuffle": true
+    },
+    "JDModel_paste_0823_0827_M300_background_1_merge_second": {
+      "nums": 5000,
+      "shuffle": true
+    },
+    "JDModel_paste_0823_0906_dlc_filter_no_benchang_second": {
+      "nums": 5000,
+      "shuffle": true
+    },
+    "JDModel_paste_0823_0907_dlk_filter_merge_second": {
+      "nums": 5000,
+      "shuffle": true
+    },
+    "JDModel_normal_0906_background_choosed_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_20250906_out_merge_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0911_FC30_filter_background_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0911_FC30_filter_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0912_JD_209_filter_background_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0912_JD_209_filter_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0913_FC30_filter_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0914_FC30_filter_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0915_M300_filter_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0917_FC30_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0917_JD_background_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0917_JD_filter_second": {
+      "nums": 100000000,
+      "shuffle": true
+    }
+  },
+  "part_test": {}
+}

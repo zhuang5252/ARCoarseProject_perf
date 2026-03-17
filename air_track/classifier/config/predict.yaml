@@ -1,0 +1,62 @@
+# predict opts
+model_path: '/home/csz_changsha/PycharmProjects/github/zhuang5252/AirTrack/model_saved/second_classifier/binary_resnet/BinaryResNet/251203_FlySubjectAirToGround_64_64/251203_FlySubjectAirToGround_64_64.onnx'
+test_data_dir: '/home/csz_changsha/data/FlySubjectAirToGround_merge/second_classifier_dataset_251120/val'
+seed: 128  # 固定随机数种子
+device: 'cuda:0'
+
+# 数据集路径及文件类型
+data_dir: '/home/csz_changsha/data/AR_2511/second_classifier_dataset'
+img_folder: 'img'  # 完整路径为data_dir/img
+npy_folder: 'npy'  # 完整路径为data_dir/npy
+label_file: 'label.csv'  # 完整路径为data_dir/label.csv
+
+# 数据集的划分
+#parts: [
+#    'JDModel_0611_second', 'JDModel_0615_second',
+#    'JDModel_0615_bangwan_second', 'JDModel_0618_second',
+#    'JDModel_0716_JD_background_second', 'JDModel_0716_JD_no_background_second',
+#    'JDModel_0716_T18_background_second', 'JDModel_0716_T18_no_background_second',
+#    'JDModel_T18-2_second'
+#]
+#parts: [
+#    'JDModel_0611_second', 'JDModel_0615_second', 'JDModel_0615_bangwan_second', 'JDModel_0618_second',
+#    'JDModel_0715_JD_background_second', 'JDModel_0715_JD_no_background_second',
+#    'JDModel_0715_T18_background_second', 'JDModel_0715_T18_no_background_second',
+#    'JDModel_0717_T18_101_1_second', 'JDModel_0717_T18_101_second', 'JDModel_T18-2_second',
+#    'T18Model_0611_second', 'T18Model_0615_second', 'T18Model_0615_bangwan_second', 'T18Model_0618_second',
+#    'T18Model_0715_JD_background_second', 'T18Model_0715_JD_no_background_second',
+#    'T18Model_0715_T18_background_second', 'T18Model_0715_T18_no_background_second',
+#    'T18Model_0717_T18_101_1_second', 'T18Model_0717_T18_101_second', 'T18Model_T18-2_second'
+#]
+parts: ['val_1frame', 'val_2frame', 'test_1frame', 'test_2frame']
+
+# 图像和标签类型
+img_format: '.png'
+npy_format: '.npy'
+gt_format: '.csv'
+
+# 目标类别
+classes: [
+    'neg',
+    'pos',
+]
+
+max_pixel: 255  # 图像像素最大值
+
+# model opts
+model_params:
+  model_type: 'second_classifier'
+  model_mode: 'predict'  # 模型运行模式，可选：train、predict
+  model_cls: 'binary_resnet'  # 模型类名，可选：official_resnet、binary_resnet
+  base_model_name: 'BinaryResNet'  # 模型名称，可选：(resnet18、resnet34、resnet50、resnet101、resnet152)、BinaryResNet
+  input_channel: 1 # 输入通道数
+  nb_classes: 2  # 类别数
+  pretrained: False  # 是否使用预训练模型
+
+# dataset opts
+dataset_params:
+  img_read_method: 'unchanged'  # 使用哪种方式读取图像，支持 gray、rgb、unchanged, 需要与上方model_params中的input_channel保持一致
+  img_size: [64, 64]  # w, h
+  normalize: True  # 是否归一化
+  return_torch_tensors: True  # 是否返回torch张量
+

@@ -1,0 +1,26 @@
+
+{
+  "parts":
+  {
+    "0611":
+    {
+      "nums": 350,
+      "shuffle": true,
+      "input_scale": 0.33
+    },
+    "0615":
+    {
+      "nums": 350,
+      "shuffle": true,
+      "input_scale": 0.33
+    }
+  },
+  "mode": "JDModel_Predict",
+  "data_dir": "/data/air_track/dataset",
+  "output_dir": "/data/air_track/detector/special_test",
+  "use_visible": 1,
+  "use_infrared": 0,
+  "save_img": true,
+  "save_txt": true,
+  "execute_command": "./x2_test"
+}

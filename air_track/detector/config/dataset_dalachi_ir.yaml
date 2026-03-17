@@ -1,0 +1,143 @@
+
+# 三种模式
+stage_train: 'train'
+stage_valid: 'val'
+stage_test: 'test'
+
+# 数据集路径及文件类型
+data_dir: '/media/linana/2C5821EF5821B88A/yanqing_train_data'
+img_folder: 'images'  # 完整路径为data_dir/stage/Images
+label_folder: 'labels'  # 完整路径为data_dir/stage/labels
+
+# 图像和标签类型
+img_format: '.jpg'
+gt_format: '.txt'
+
+# 红外数据集划分
+part_train: ['0809_infrared_processed_640_512_15', '0809_infrared_processed_640_512_18',
+             '0809_infrared_2_processed_640_512_15', '0809_infrared_2_processed_640_512_18',
+]
+part_val: ['0809_infrared_processed_640_512_15', '0809_infrared_processed_640_512_18',
+             '0809_infrared_2_processed_640_512_15', '0809_infrared_2_processed_640_512_18',
+]
+
+# 数据集的划分
+#part_train: ['0611_processed_640_360_11/train', '0615_bangwan_processed_640_360_11/train',
+#             '0615_processed_640_360_11/train', '0618_processed_640_360_11/train',
+#             '0715_JD_background/train', '0715_JD_no_background_processed_640_360_11/train',
+#             '0715_T18_background/train', '0715_T18_no_background_processed_640_360_11/train',
+#             'T18-1_processed_640_360_11/train', 'T18-2_processed_640_360_11/train',
+#             '0717_T18_101_processed_640_360_11/train',
+#             '0727_JD_201_processed_640_360_11/train', '0727_JD_202_processed_640_360_11/train',
+#             '0727_T18_101_processed_640_360_11/train', '0727_T18_102_processed_640_360_11/train',
+#             '0807_JD_part_processed_640_360_11/train'
+#]
+#part_val: ['0611_processed_640_360_11/val', '0615_bangwan_processed_640_360_11/val',
+#           '0615_processed_640_360_11/val', '0618_processed_640_360_11/val',
+#           '0715_JD_background/val', '0715_JD_no_background_processed_640_360_11/val',
+#           '0715_T18_background/val', '0715_T18_no_background_processed_640_360_11/val',
+#           'T18-1_processed_640_360_11/val', 'T18-2_processed_640_360_11/val',
+#           '0717_T18_101_processed_640_360_11/val',
+#           '0727_JD_201_processed_640_360_11/val', '0727_JD_202_processed_640_360_11/val',
+#           '0727_T18_101_processed_640_360_11/val', '0727_T18_102_processed_640_360_11/val',
+#           '0807_JD_part_processed_640_360_11/val'
+#]
+
+#part_train: ['0611_processed_640_360_11/train',
+#'0615_bangwan_processed_640_360_11/train',
+#'0715_JD_background/train',
+#'0715_T18_background/train',
+#'0615_processed_640_360_11/train',
+#'0618_processed_640_360_11/train',
+#'0715_JD_no_background_processed_640_360_11/train',
+#'0715_T18_no_background_processed_640_360_11/train',
+#'0727_18_101_process_640_360/train',
+#'0727_18_102_process_640_360/train',
+#'0727JD_201_process_640_360/train',
+#'0727JD_202_process_640_360/train',
+#'T18-1_processed_640_360_11/train',
+#'T18-2_processed_640_360_11/train',
+#]
+#part_val: ['0611_processed_640_360_11/val',
+#'0615_bangwan_processed_640_360_11/val',
+#'0715_JD_background/val',
+#'0715_T18_background/val',
+#'0615_processed_640_360_11/val',
+#'0618_processed_640_360_11/val',
+#'0715_JD_no_background_processed_640_360_11/val',
+#'0715_T18_no_background_processed_640_360_11/val',
+#'0727_18_101_process_640_360/val',
+#'0727_18_102_process_640_360/val',
+#'0727JD_201_process_640_360/val',
+#'0727JD_202_process_640_360/val',
+#'T18-1_processed_640_360_11/val',
+#'T18-2_processed_640_360_11/val',]
+#part_train: ['T18-1_processed_768_576_8/train', 'T18-2_processed_768_576_8/train', 't18_0715_processed_640_360_11/train']
+#part_val: ['T18-1_processed_768_576_8/val', 'T18-2_processed_768_576_8/val', 't18_0715_processed_640_360_11/val']
+#part_train: ['T18-1_processed_768_576_8', 'T18-2_processed_768_576_8']
+#part_val: ['T18-1_processed_768_576_8', 'T18-2_processed_768_576_8']
+#part_train: ['0807_JD_part_processed_640_360_11']
+#part_val: ['0807_JD_part_processed_640_360_11']
+#part_train: ['0715_JD_no_background_processed_640_360_11', '0715_T18_processed_640_360_11', 'T18-1_processed_640_360_11', 'T18-2_processed_640_360_11', '0715_JD_background', '0715_T18_background']
+#part_val: ['0715_JD_no_background_processed_640_360_11', '0715_T18_processed_640_360_11', 'T18-1_processed_640_360_11', 'T18-2_processed_640_360_11', '0715_JD_background', '0715_T18_background']
+#part_train: ['0727_JD_201_processed_640_360_11', '0727_JD_202_processed_640_360_11',
+#'0727_T18_101_processed_640_360_11',
+#'0727_T18_102_processed_640_360_11']
+#part_val: ['0727_JD_201_processed_640_360_11', '0727_JD_202_processed_640_360_11',
+#'0727_T18_101_processed_640_360_11',
+#'0727_T18_102_processed_640_360_11']
+part_test: ['']
+
+# 目标类别
+classes: [
+  'himars_laucher',
+  'hismars_carrier',
+  'jinbei',
+  'jinbei-fake',
+  'haimars_laucher-fake',
+  'car',
+  'LT-2000',
+  'tianbing-fasheche',
+  'aiguozhe-fasheche',
+  'tiangong-fasheche',
+  'tianbing-leidache',
+  'aiguozhe-leidache',
+  'tiangong-leidache',
+  'tianbing-zhihuiche',
+  'aiguozhe-zhihuiche',
+  'tiangong-zhihuiche',
+  'hanma',
+  'szb',
+  'himars_laucher-wzw'
+]
+# 目标类别数
+nb_classes: 19
+
+# dataset中的frames格式
+# 只做展示使用
+frame: {
+    'part',
+    'flight_id',
+    'frame_num',
+    'img_name',
+    'img_path',
+    'have_distance',
+    'img_width',
+    'img_height',
+    'detections',
+}
+# 只做展示使用
+detection: {
+        'target_id',
+        'cls_name',
+        'distance',
+        'is_above_horizon',
+        'cx',
+        'cy',
+        'w',
+        'h',
+    }
+
+# opts
+max_pixel: 255  # 图像像素最大值
+offset_scale: 256.0

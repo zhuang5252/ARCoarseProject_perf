@@ -1,0 +1,62 @@
+
+# 三种模式
+stage_train: 'train'
+stage_valid: 'val'
+stage_test: 'test'
+
+# 数据集路径及文件类型
+data_dir: '/home/csz_changsha/data/yanqing_data'
+img_folder: 'images'  # 完整路径为data_dir/stage/Images
+label_folder: 'label'  # 完整路径为data_dir/stage/labels
+
+# 图像和标签类型
+img_format: '.jpg'
+gt_format: '.txt'
+
+# 数据集的划分
+part_train: ['0326dabaige/train', '0401_data/train']
+part_val: ['0326dabaige/val', '0401_data/val']
+part_test: ['0326dabaige/test', '0401_data/test']
+
+# 目标类别
+classes: [
+    'himars_laucher',
+    'himars_carrier',
+    'jinbei',
+    'jinbei-fake',
+    'himars_laucher-fake'
+]
+# 目标类别数
+nb_classes: 5
+
+# 帧对齐保存的pkl文件
+transforms_dir: ''
+
+# dataset中的frames格式
+# 只做展示使用
+frame: {
+    'part',
+    'flight_id',
+    'frame_num',
+    'img_name',
+    'img_path',
+    'have_distance',
+    'img_width',
+    'img_height',
+    'detections',
+}
+# 只做展示使用
+detection: {
+        'target_id',
+        'cls_name',
+        'distance',
+        'is_above_horizon',
+        'cx',
+        'cy',
+        'w',
+        'h',
+    }
+
+# opts
+max_pixel: 255  # 图像像素最大值
+offset_scale: 256.0

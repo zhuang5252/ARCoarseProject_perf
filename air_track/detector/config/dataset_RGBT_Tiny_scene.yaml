@@ -1,0 +1,90 @@
+
+# 三种模式
+stage_train: 'train'
+stage_valid: 'val'
+stage_test: 'test'
+
+# 数据集路径及文件类型
+#data_dir: '/home/csz_changsha/data/RGBT-Tiny_scene/base_day'
+#img_folder: 'images'  # 完整路径为data_dir/part/Images
+#label_folder: 'labels'  # 完整路径为data_dir/part/label
+#
+## 图像和标签类型
+#img_format: '.jpg'
+#gt_format: '.txt'
+#
+## 数据集的划分
+#part_train: [
+#    'DJI_0085_2', 'DJI_0089_2', 'DJI_0095_3', 'DJI_0275_3',
+#    'DJI_0279_2', 'DJI_0279_4', 'DJI_0265_1', 'DJI_0283_1',
+#    'DJI_0291_2', 'DJI_0295_3'
+#]
+## 验证集为训练集每个文件夹的10%数据
+#part_val: [
+#    'DJI_0085_2', 'DJI_0089_2', 'DJI_0095_3', 'DJI_0275_3',
+#    'DJI_0279_2', 'DJI_0279_4', 'DJI_0265_1', 'DJI_0283_1',
+#    'DJI_0291_2', 'DJI_0295_3'
+#]
+#part_test: [
+#
+#]
+
+# 数据集路径及文件类型
+data_dir: '/home/csz_changsha/data/RGBT-Tiny_scene/base_night'
+img_folder: 'images'  # 完整路径为data_dir/part/Images
+label_folder: 'labels'  # 完整路径为data_dir/part/label
+
+# 图像和标签类型
+img_format: '.jpg'
+gt_format: '.txt'
+
+# 数据集的划分
+part_train: [
+    'DJI_0073_3', 'DJI_0075_3', 'DJI_0225_1', 'DJI_0227_1',
+    'DJI_0327_3', 'DJI_0331_3'
+]
+# 验证集为训练集每个文件夹的10%数据
+part_val: [
+    'DJI_0073_3', 'DJI_0075_3', 'DJI_0225_1', 'DJI_0227_1',
+    'DJI_0327_3', 'DJI_0331_3'
+]
+part_test: [
+
+]
+
+# 目标类别
+classes: [
+    'bus',
+    'car',
+]
+# 目标类别数
+nb_classes: 2
+
+# dataset中的frames格式
+# 只做展示使用
+frame: {
+    'part',
+    'flight_id',
+    'frame_num',
+    'img_name',
+    'img_path',
+    'have_distance',
+    'img_width',
+    'img_height',
+    'detections',
+}
+# 只做展示使用
+detections: {
+        'target_id',
+        'cls_name',
+        'distance',
+        'is_above_horizon',
+        'cx',
+        'cy',
+        'w',
+        'h',
+    }
+
+# opts
+max_pixel: 255  # 图像像素最大值
+offset_scale: 256.0

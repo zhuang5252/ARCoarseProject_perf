@@ -1,0 +1,64 @@
+
+# 三种模式
+stage_train: 'train'
+stage_valid: 'valid'
+stage_test: 'test'
+
+# 数据集路径及文件类型
+data_dir: '/home/csz_changsha/data/AR_2410/normal_airtrack_test_1'
+img_folder: 'Images'  # 完整路径为data_dir/part/Images
+label_file: 'ImageSets/groundtruth.csv'  # 完整路径为data_dir/part/ImageSets
+
+# 图像和标签类型
+img_format: '.png'
+gt_format: '.csv'
+
+# 目标类别
+classes: [
+    'None',
+    'plane',
+]
+# 目标类别数
+nb_classes: 2
+
+# 帧对齐保存的pkl文件
+transforms_dir: '/home/csz_changsha/PycharmProjects/github/zhuang5252/droneTrack_640x512/aot_inter_res/align_result/frame_transforms'
+
+# 数据集的划分
+part_train: ['lz_trj_1_0500', 'lz_trj_1_0700', 'lz_trj_1_0900', 'lz_trj_1_1100',
+              'lz_trj_1_1300', 'lz_trj_1_1500', 'lz_trj_1_1700', 'lz_trj_1_1900', 'lz_trj_1_2100', 'lz_trj_1_2300',
+              'lz_trj_2_0500', 'lz_trj_2_0700', 'lz_trj_2_0900', 'lz_trj_2_1100', 'lz_trj_2_1300', 'lz_trj_2_1500',
+              'lz_trj_2_1700', 'lz_trj_2_1900', 'sah_trj_1_0530', 'sah_trj_1_0730', 'sah_trj_1_0930', 'sah_trj_1_1130',
+              'sah_trj_1_1330', 'sah_trj_1_1530', 'sah_trj_1_1730', 'sah_trj_1_1930', 'sah_trj_1_2130',
+              'sah_trj_1_2330', 'sah_trj_2_0930', 'sah_trj_2_1130', 'sah_trj_2_1330', 'sah_trj_2_1530',
+              'sah_trj_2_1730', 'sah_trj_2_1930']
+part_val: ['lz_trj_1_0100', 'lz_trj_2_0100', 'sah_trj_1_0130', 'sah_trj_2_0530']
+part_test: ['lz_trj_1_0300', 'lz_trj_2_0300', 'sah_trj_1_0330', 'sah_trj_2_0730']
+
+# dataset中的frames格式
+# 只做展示使用
+frame: {
+    'part',
+    'flight_id',
+    'frame_num',
+    'img_name',
+    'img_path',
+    'have_distance',
+    'detections',
+    'error'
+}
+# 只做展示使用
+detection: {
+        'cls_name',
+        'target_id',
+        'distance',
+        'is_above_horizon',
+        'cx',
+        'cy',
+        'w',
+        'h',
+    }
+
+# opts
+max_pixel: 65535  # 图像像素最大值
+offset_scale: 256.0

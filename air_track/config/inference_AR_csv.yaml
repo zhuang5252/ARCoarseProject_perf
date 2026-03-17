@@ -1,0 +1,43 @@
+
+# Inference opts
+seed: 128  # 随机数种子
+device: 'cuda:0'  # GPU设备
+img_read_method: 'unchanged'  # 使用哪种方式读取图像，支持 gray、rgb、unchanged
+use_frame_align: False  # 是否使用帧对齐
+use_second_classify: False  # 是否使用二级分类器
+second_classify_method: 'filter_pos'  # 二级分类器方法，支持 filter_conf（使用一二级conf相乘）、filter_pos（直接使用二级分类器判断正负样本）
+conf_threshold: 0.1  # 一级检测器和二级分类器置信度相乘的阈值
+align_predictor_yaml: ./air_track/aligner/config/predict.yaml  # 帧对齐预测配置文件
+detect_predictor_yaml: ./air_track/detector/config/predict_AR2410_AR2511.yaml  # 检测器预测配置文件
+classify_predictor_yaml: ./air_track/classifier/config/predict.yaml  # 分类器预测配置文件
+# 可选传入各个模块模型路径
+#align_model_path: ''  # 帧对齐模型路径
+detect_model_path: '/home/csz_changsha/PycharmProjects/github/zhuang5252/AirTrack/model_saved/detect_model/official_mobilenet_efficientnet/OfficialMobileNetV2/mobilenet_v2/AR_2410_2511_mobilenet_v2/AR_2410_2511_mobilenet_v2.onnx'  # 检测器模型路径
+#classify_model_path: ''  # 分类器模型路径
+
+# 数据集路径及文件类型
+dataset_params:
+  data_dir: '/home/csz_changsha/data/AR_2410_2511'
+  img_folder: 'Images'  # 完整路径为data_dir/part/Images
+  label_folder: 'ImageSets'  # 完整路径为data_dir/part/ImageSets
+  label_file: 'ImageSets/groundtruth.csv'  # 完整路径为data_dir/part/ImageSets
+  # 图像和标签类型
+  img_format: '.png'
+  gt_format: '.csv'
+
+  stage_train: 'train'
+  stage_valid: 'val'
+  stage_test: 'test'
+  classes: [
+      'None',
+      'object',
+  ]
+  # 目标类别数
+  nb_classes: 2
+
+  # 测试集划分
+  part_val: ['0522', 'lz_trj_1_0100', 'lz_trj_2_0100', 'sah_trj_1_0130', 'sah_trj_2_0530']
+#  part_test: ['lz_trj_1_0300']
+  part_test: ['AR_2410_test_data_merge', 'AR_2511_test_data_merge']
+  img_size: [640, 512]  # 输入图像尺寸(w, h)
+  max_pixel: 65535  # 图像最大像素数

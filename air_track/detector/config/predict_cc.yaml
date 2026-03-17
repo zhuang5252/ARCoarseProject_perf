@@ -1,0 +1,74 @@
+# predict opts
+model_path: '/home/csz_changsha/PycharmProjects/github/zhuang5252/AirTrack_single_img/model_saved/HRNet48/2025_02_21_14_cc_sim/minimum_loss.pt'
+predictor_name: 'Predictor_2_Output'  # predictor.py中的预测器名字
+seed: 128  # 固定随机数种子
+device: 'cuda:0'
+max_pixel: 255  # 图像最大像素值
+offset_scale: 256.0
+half: False  # 是否使用半精度
+max_nb_objects: 10  # 最大被检测目标数量
+conf_threshold: 0.1  # 置信度阈值
+iou_threshold: 0.025  # iou阈值
+target_min_size: 5  # 图像最小目标框(不可小于down_scale)
+x_pad: 0  # 待检测图像x方向填充像素数量
+y_pad: 0  # 待检测图像y方向填充像素数量
+visualize_flag: True  # 是否可视化检测结果
+visualize_save_dir: '/home/csz_changsha/PycharmProjects/github/zhuang5252/AirTrack_all/AirTrack_single_img/output'  # 可视化结果保存路径
+calculate_metrics_flag: True  # 是否计算准确率、检出率这些指标
+metrics_cache_save_file: '/home/csz_changsha/PycharmProjects/github/zhuang5252/AirTrack_all/AirTrack_single_img/output'  # 待计算准确率、检出率这些指标的缓存文件保存位置
+iou_flag: True  # 计算指标是否使用iou来计算，False则使用distance中心点直线距离
+threshold: 0.25  # 使用iou则为0.25，使用distance则用1.5
+cls_flag: False  # 计算召回率等指标时是否使用类别判别
+show_confidence: True  # 是否可视化confidence并保存下来，保存路径与visualize_save_dir一致
+
+# 测试数据 opts
+data_dir: '/home/csz_changsha/data/cc/AirTrack_dataset'
+img_folder: 'images'  # 完整路径为data_dir/stage/Images
+label_folder: 'labels'  # 完整路径为data_dir/stage/labels
+img_format: '.jpg'
+gt_format: '.txt'
+# 数据集的划分
+part_train: ['train']
+part_val: ['test']
+part_test: ['test']
+
+
+# model opts
+model_params:
+  model_type: 'detect_model'
+  model_cls: 'HRNet_2_Output'  # 需要设置为hrnet_train.py中的网络定义，可选：HRNetSimLearning_2_Output、HRNet_2_Output、HRNet_3_Output、HRNet_5_Output、HRNet_6_Output、HRNet_5_Stage_5_Output
+  base_model_name: 'hrnet_w18'
+  input_frames: 1  # 为 2 取两帧图像，为 3 取连续三帧图像(需与dataset_params中的input_frames一致)
+  input_channel: 3  # 模型输入通道数实际为 input_frames * input_channel，需要与下方dataset_params中的img_read_method保持一致
+  combine_outputs_dim: 512  # HRNet中fc_comb输出的特征通道数
+  combine_outputs_kernel: 1  # HRNet中fc_comb的kernel_size
+  output_binary_mask: True  # 输出二进制掩码
+  down_scale: 1   # 根据模型修改(模型输入512×640，输出256×320，下采样比例为2)
+  nb_classes: 6  # 类别数
+  similarity_learning: False  # 是否使用相似性学习以训练模型对RGB和灰度的适应性，确保下方img_read_method为 admix 才能为True
+  pretrained: False  # 是否使用预训练模型
+
+# dataset opts
+dataset_params:
+  img_size: [320, 256]  # 输入图像尺寸(w, h)
+  down_scale: 1  # 需与model_params中的down_scale保持一致
+  target_min_size: 5  # 图像最小目标框
+  gamma_flag: False  # 是否使用gamma转换
+  gamma_loc: 0.0  # gamma转换的np.random.normal的均值
+  gamma_scale: 0.2  # gamma转换的np.random.normal的标准差
+  return_torch_tensors: True  # 是否返回torch_tensors
+
+
+# 以下参数只在生成二级分类器数据及其他测试脚本中使用
+stage_train: 'train'
+stage_valid: 'val'
+stage_test: 'test'
+classes: [
+    'Himars_launcher',
+    'Hummer',
+    'Himars_carrier',
+    'Others',
+    'Command',
+    'Cross'
+]
+nb_classes: 6

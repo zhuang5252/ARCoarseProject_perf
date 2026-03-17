@@ -1,0 +1,119 @@
+# predict opts
+model_path: '/home/csz_changsha/PycharmProjects/github/zhuang5252/AirTrack_all/AirTrack_single_img/model_saved/official_resnet/OfficialResNet/ResNet18/2025_05_12_15_sitch_tiny_3_2/minimum_loss.pt'
+seed: 128  # 固定随机数种子
+device: 'cuda:0'
+max_pixel: 255  # 图像最大像素值
+offset_scale: 256.0
+half: False  # 是否使用半精度
+max_nb_objects: 100  # 最大被检测目标数量
+conf_threshold: 0.1  # 置信度阈值
+iou_threshold: 0.025  # iou阈值
+target_min_size: 10  # 图像最小目标框(不可小于down_scale)
+x_pad: 0  # 待检测图像x方向填充像素数量
+y_pad: 0  # 待检测图像y方向填充像素数量
+visualize_flag: True  # 是否可视化检测结果
+visualize_save_dir: '/home/csz_changsha/PycharmProjects/github/zhuang5252/AirTrack_all/AirTrack_single_img/output'  # 可视化结果保存路径
+calculate_metrics_flag: True  # 是否计算准确率、检出率这些指标
+metrics_cache_save_file: '/home/csz_changsha/PycharmProjects/github/zhuang5252/AirTrack_all/AirTrack_single_img/output'  # 待计算准确率、检出率这些指标的缓存文件保存位置
+iou_flag: True  # 计算指标是否使用iou来计算，False则使用distance中心点直线距离
+threshold: 0.25  # 使用iou则为0.25，使用distance则用1.5
+cls_flag: False  # 计算召回率等指标时是否使用类别判别
+analysis_show: True  # 是否可视化一些分析结果并保存下来，保存路径与visualize_save_dir一致
+
+# 测试数据 opts
+data_dir: '/home/csz_changsha/data/stiched_img_tiny_0514'
+img_folder: 'images'  # 完整路径为data_dir/part/Images
+label_folder: 'labels'  # 完整路径为data_dir/part/labels
+label_file: 'ImageSets/groundtruth.csv'  # 完整路径为data_dir/part/ImageSets
+# 图像和标签类型
+img_format: '.jpg'
+gt_format: '.txt'
+# 数据集的划分
+part_train: ['0422', '0425_2haoji']
+part_val: ['0422', '0425_2haoji']
+part_test: ['0422', '0425_2haoji']
+
+# model opts
+model_params:
+  model_type: 'detect_model'  # 默认即可，无需更改
+  model_mode: 'predict'  # 模型运行模式，可选：train、predict
+  backbone_type: 'official_resnet'  # backbone类型，参照模型配置文件（model_config_readme.json）
+  backbone_name: 'OfficialResNet'  # backbone名称，参照模型配置文件（model_config_readme.json）
+  base_model_name: 'ResNet18'  # 基础模型名称，参照模型配置文件（model_config_readme.json）
+  head_name: 'Head_2_Output'  # head名称，参照模型配置文件（model_config_readme.json）
+  head_nums: 2  # 输出头的数量（可选：2、3、5、6），与head_name对应
+  input_frames: 1  # 为 2 取两帧图像，为 3 取连续三帧图像(需与dataset_params中的input_frames一致)
+  input_channel: 3  # 模型输入通道数实际为 input_frames * input_channel，需要与下方dataset_params中的img_read_method保持一致
+  combine_outputs_dim: 512  # Model中fc_comb输出的特征通道数
+  combine_outputs_kernel: 1  # Model中fc_comb的kernel_size
+  output_binary_mask: True  # 输出二进制掩码
+  down_scale: 2   # 根据模型修改(模型输入512×640，输出256×320，下采样比例为2)
+  nb_classes: 6  # 类别数
+  pretrained: False  # 是否使用预训练模型(默认即可)
+  return_feature_map: False  # 是否返回特征图
+
+# dataset opts
+dataset_params:
+  dataset_type: 'yolo_txt'  # 数据集格式，可选：yolo_txt、json、AR_csv、aot
+  img_read_method: 'rgb'  # 使用哪种方式读取图像，支持 gray、rgb、unchanged, admix(rgb、gray、filter混合，还是3通道输入)，需要与上方model_params中的input_channel保持一致
+  frame_step: 0  # 为 1 取相邻图像，为 2 表示连续帧数的间隔为2（步长）
+  input_frames: 1  # 为 2 取两帧图像，为 3 取连续三帧图像(需与model_params中的input_frames一致)
+  train_val_test_scale: None  # 训练集、验证集、测试集比例，默认为None，即使用全部数据集, 也可设置为[0.8, 0.1, 0.1]
+  img_size: [960, 540]  # 输入图像尺寸(w, h)
+  down_scale: 2  # 需与model_params中的down_scale保持一致
+  target_min_size: 10  # 图像最小目标框
+  frame_align_flag: False  # 是否使用帧对齐模块配准图像
+  gamma_flag: False  # 是否使用gamma转换
+  gamma_loc: 0.0  # gamma转换的np.random.normal的均值
+  gamma_scale: 0.2  # gamma转换的np.random.normal的标准差
+  return_torch_tensors: True  # 是否返回torch_tensors
+  enable_augment: False  # 是否使用数据增强（如果图像为灰度或者红外，下方color的prob需要为0.0）
+  # ==== 主配置项：定义数据增强策略 ====
+  augmentation:
+    # ----------------- 几何翻转增强配置 -----------------
+    flip:
+      prob: 0.5       # 总触发概率（含水平/垂直） (0.0-1.0)
+      hflip_prob: 0.5 # 水平翻转概率（在触发翻转时生效）
+      vflip_prob: 0.3 # 垂直翻转概率（在触发翻转时生效）
+
+    # ---------------- 仿射变换增强配置 ----------------
+    affine:
+      prob: 0.5       # 总触发概率 (0.0-1.0)
+      scale: # 缩放配置
+        x: [0.9, 1.1]  # 宽度缩放系数（0.8=缩至80%）
+        y: [0.9, 1.1]  # 高度缩放系数（1.1=放大至110%）
+      translate: # 平移配置（比例制）
+        x: [-0.05, 0.05] # 水平平移（-0.1=左移10%宽度）
+        y: [-0.05, 0.05]   # 垂直平移（0.1=下移10%高度）
+      rotate: [-5, 5] # 旋转角度（单位：度，负=顺时针）
+      shear: [-5, 5]  # 剪切角度（单位：度）
+
+    # ---------------- 颜色空间增强配置 ----------------
+    color:
+      prob: 0.7       # 总触发概率 (0.0-1.0)     如果图像为灰度或者红外，这里的prob需要为0.0
+      hue_shift: [-30, 30]      # 色相偏移（-180~180，HSV色彩空间）
+      saturation_shift: [-50, 50]  # 饱和度偏移（-100~100，负数=降低饱和度）
+      grayscale_alpha: [0.0, 1.0]  # 灰度化系数（0.0=原图，1.0=全灰度）
+      contrast_range: [0.7, 1.5]  # 对比度系数（<1.0=降低对比度，1.0=原图，>1.0增强对比度）
+
+    # ---------------- 噪声与模糊增强配置 ----------------
+    noise:
+      prob: 0.5       # 总触发概率(0.0-1.0)
+      blur_sigma: [0.0, 2.0]     # 高斯模糊强度（单位：像素，数值越大越模糊）
+      gaussian_noise_scale: [0.0, 0.1] # 噪声强度（0.1=25.5像素波动，实际强度=值×255）
+
+# 以下参数只在生成二级分类器数据及其他测试脚本中使用
+stage_train: 'train'
+stage_valid: 'val'
+stage_test: 'test'
+# 目标类别
+classes: [
+  'himars_laucher',
+  'himars_carrier',
+  'jinbei',
+  'jinbei-fake',
+  'himars_laucher-fake',
+  'car'
+]
+# 目标类别数
+nb_classes: 6

@@ -1,0 +1,151 @@
+{
+  "part_train": {
+    "0815_JD_201_background_use_0615_bangwan": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0727_T18_101_background_use_0615_bangwan": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0815_T18_101_background_use_0702_T18": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0715_T18_background_use_0611": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0815_JD_202_background_2_use_0615_bangwan": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0815_JD_202_background_1_use_0611": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0715_JD_background_use_0702_T18": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0815_JD_202_background_3_use_0615_bangwan": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0727_T18_101_background_use_0702_T18": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0715_T18_background_use_0615_bangwan": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0815_JD_202_background_3_use_0611": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0715_JD_background_use_0611": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0727_T18_101_background_use_0611": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0815_T18_101_background_use_0615_bangwan": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0815_JD_202_background_2_use_0611": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0815_JD_202_background_1_use_0615_bangwan": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0815_JD_203_background_use_0615_bangwan": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0815_JD_202_background_3_use_0702_T18": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0815_JD_203_background_use_0702_T18": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0815_JD_202_background_2_use_0702_T18": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0815_JD_202_background_1_use_0702_T18": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0715_T18_background_use_0702_T18": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0815_JD_201_background_use_0702_T18": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0715_JD_background_use_0615_bangwan": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0815_JD_203_background_use_0611": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0815_T18_101_background_use_0611": {
+      "nums": 1800,
+      "shuffle": true
+    },
+    "0815_JD_201_background_use_0611": {
+      "nums": 1800,
+      "shuffle": true
+    }
+  },
+  "part_val": {
+    "../0715_JD_no_background_processed_640_360_11/train": {
+      "nums": 400,
+      "shuffle": true
+    },
+    "../0715_T18_no_background_processed_640_360_11/train": {
+      "nums": 400,
+      "shuffle": true
+    },
+    "../0717_T18_101_processed_640_360_11/train": {
+      "nums": 400,
+      "shuffle": true
+    },
+    "../0727_JD_201_processed_640_360_11/train": {
+      "nums": 400,
+      "shuffle": true
+    },
+    "../0727_JD_202_processed_640_360_11/train": {
+      "nums": 400,
+      "shuffle": true
+    },
+    "../0727_T18_101_processed_640_360_11/train": {
+      "nums": 400,
+      "shuffle": true
+    },
+    "../0727_T18_102_processed_640_360_11/train": {
+      "nums": 400,
+      "shuffle": true
+    },
+    "../0807_JD_part_processed_640_360_11/train": {
+      "nums": 400,
+      "shuffle": true
+    },
+    "../0812_FC30_processed_640_360_11/train": {
+      "nums": 400,
+      "shuffle": true
+    }
+  },
+  "part_test": {}
+}

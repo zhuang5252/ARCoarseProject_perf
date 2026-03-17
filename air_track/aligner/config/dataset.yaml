@@ -1,0 +1,26 @@
+
+# 两种模式
+stage_train: 'train'
+stage_valid: 'valid'
+
+# 数据集路径及文件类型
+data_dir: '/media/linana/2C5821EF5821B88A/yanqing_data/0611'
+img_folder: 'rgb'  # 完整路径为data_dir/part/Images
+label_file: 'ImageSets/groundtruth.csv'  # 完整路径为data_dir/part/ImageSets（只针对Aot和AR数据）
+cache_data_dir: '/media/linana/2C5821EF5821B88A/yanqing_data/0611/align_cache'  # 保存数据集缓存的路径
+
+# 图像和标签类型
+img_format: '.jpg'
+gt_format: '.txt'
+
+# 数据集的划分
+part_train: ['1']
+part_val: ['2']
+part_test: ['3']
+
+# 构建标签的均匀分布的像素位置
+points_shape: (2, 16, 20)  # 需要与模型的输出相匹配（已弃用）
+#points_shape: (2, 34, 60)  # 需要与模型的输出相匹配
+
+# opts
+max_pixel: 255  # 图像最大像素值

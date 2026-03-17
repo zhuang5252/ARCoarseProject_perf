@@ -1,0 +1,248 @@
+
+{
+  "part_train":
+  {
+    "0611_processed_640_360_11/train":
+    {
+      "nums": 160,
+      "shuffle": true
+    },
+    "0615_bangwan_processed_640_360_11/train":
+    {
+      "nums": 300,
+      "shuffle": true
+    },
+    "0615_processed_640_360_11/train":
+    {
+      "nums": 160,
+      "shuffle": true
+    },
+    "0618_processed_640_360_11/train":
+    {
+      "nums": 160,
+      "shuffle": true
+    },
+    "0702_T18_1_processed_640_360_11/train":
+    {
+      "nums": 250,
+      "shuffle": true
+    },
+    "0702_T18_2_processed_640_360_11/train":
+    {
+      "nums": 250,
+      "shuffle": true
+    },
+    "0715_JD_background/train":
+    {
+      "nums": 800,
+      "shuffle": true
+    },
+    "0715_JD_no_background_processed_640_360_11/train":
+    {
+      "nums": 1200,
+      "shuffle": true
+    },
+    "0715_T18_background/train":
+    {
+      "nums": 800,
+      "shuffle": true
+    },
+    "0715_T18_no_background_processed_640_360_11/train":
+    {
+      "nums": 150,
+      "shuffle": true
+    },
+    "0717_T18_101_processed_640_360_11/train":
+    {
+      "nums": 700,
+      "shuffle": true
+    },
+    "0727_JD_201_processed_640_360_11/train":
+    {
+      "nums": 1000,
+      "shuffle": true
+    },
+    "0727_JD_202_processed_640_360_11/train":
+    {
+      "nums": 1200,
+      "shuffle": true
+    },
+    "0727_T18_101_processed_640_360_11/train":
+    {
+      "nums": 1000,
+      "shuffle": true
+    },
+    "0727_T18_102_processed_640_360_11/train":
+    {
+      "nums": 1200,
+      "shuffle": true
+    },
+    "0727_T18_101_background/train":
+    {
+      "nums": 800,
+      "shuffle": true
+    },
+    "0807_JD_part_processed_640_360_11/train":
+    {
+      "nums": 2000,
+      "shuffle": true
+    },
+    "0812_FC30_processed_640_360_11/train":
+    {
+      "nums": 2500,
+      "shuffle": true
+    },
+    "0812_FC30_gen_processed_640_360_11_1/train":
+    {
+      "nums": 700,
+      "shuffle": true
+    },
+    "0812_FC30_gen_processed_640_360_11_2/train":
+    {
+      "nums": 20,
+      "shuffle": true
+    },
+    "0812_FC30_gen_processed_640_360_11_3/train":
+    {
+      "nums": 700,
+      "shuffle": true
+    },
+    "0812_FC30_gen_processed_640_360_11_4/train":
+    {
+      "nums": 20,
+      "shuffle": true
+    },
+    "0812_FC30_gen_processed_640_360_11_5/train":
+    {
+      "nums": 400,
+      "shuffle": true
+    },
+    "0812_FC30_gen_processed_640_360_11_6/train":
+    {
+      "nums": 700,
+      "shuffle": true
+    }
+  },
+  "part_val":
+  {
+    "0611_processed_640_360_11/val":
+    {
+      "nums": 40,
+      "shuffle": true
+    },
+    "0615_bangwan_processed_640_360_11/val":
+    {
+      "nums": 40,
+      "shuffle": true
+    },
+    "0615_processed_640_360_11/val":
+    {
+      "nums": 40,
+      "shuffle": true
+    },
+    "0618_processed_640_360_11/val":
+    {
+      "nums": 40,
+      "shuffle": true
+    },
+    "0702_T18_1_processed_640_360_11/val":
+    {
+      "nums": 40,
+      "shuffle": true
+    },
+    "0702_T18_2_processed_640_360_11/val":
+    {
+      "nums": 40,
+      "shuffle": true
+    },
+    "0715_JD_background/val":
+    {
+      "nums": 200,
+      "shuffle": true
+    },
+    "0715_JD_no_background_processed_640_360_11/val":
+    {
+      "nums": 120,
+      "shuffle": true
+    },
+    "0715_T18_background/val":
+    {
+      "nums": 40,
+      "shuffle": true
+    },
+    "0715_T18_no_background_processed_640_360_11/val":
+    {
+      "nums": 210,
+      "shuffle": true
+    },
+    "0717_T18_101_processed_640_360_11/val":
+    {
+      "nums": 100,
+      "shuffle": true
+    },
+    "0727_JD_201_processed_640_360_11/val":
+    {
+      "nums": 100,
+      "shuffle": true
+    },
+    "0727_JD_202_processed_640_360_11/val":
+    {
+      "nums": 120,
+      "shuffle": true
+    },
+    "0727_T18_101_processed_640_360_11/val":
+    {
+      "nums": 100,
+      "shuffle": true
+    },
+    "0727_T18_102_processed_640_360_11/val":
+    {
+      "nums": 120,
+      "shuffle": true
+    },
+    "0807_JD_part_processed_640_360_11/val":
+    {
+      "nums": 200,
+      "shuffle": true
+    },
+    "0812_FC30_processed_640_360_11/val":
+    {
+      "nums": 250,
+      "shuffle": true
+    },
+    "0812_FC30_gen_processed_640_360_11_1/val":
+    {
+      "nums": 70,
+      "shuffle": true
+    },
+    "0812_FC30_gen_processed_640_360_11_2/val":
+    {
+      "nums": 20,
+      "shuffle": true
+    },
+    "0812_FC30_gen_processed_640_360_11_3/val":
+    {
+      "nums": 70,
+      "shuffle": true
+    },
+    "0812_FC30_gen_processed_640_360_11_4/val":
+    {
+      "nums": 70,
+      "shuffle": true
+    },
+    "0812_FC30_gen_processed_640_360_11_5/val":
+    {
+      "nums": 70,
+      "shuffle": true
+    },
+    "0812_FC30_gen_processed_640_360_11_6/val":
+    {
+      "nums": 70,
+      "shuffle": true
+    }
+  },
+  "part_test":
+  {
+
+  }
+}

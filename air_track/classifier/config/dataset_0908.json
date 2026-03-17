@@ -1,0 +1,55 @@
+{
+  "part_train": {
+    "JDModel_normal_0827_M300_background_1_merge_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0906_dlc_filter_no_benchang_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_normal_0907_dlk_filter_merge_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_paste_0823_0827_M300_background_1_merge_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_paste_0823_0906_dlc_filter_no_benchang_second": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "JDModel_paste_0823_0907_dlk_filter_merge_second": {
+      "nums": 100000000,
+      "shuffle": true
+    }
+  },
+  "part_val": {
+    "JDModel_normal_0827_M300_background_1_merge_second": {
+      "nums": 5000,
+      "shuffle": true
+    },
+    "JDModel_normal_0906_dlc_filter_no_benchang_second": {
+      "nums": 5000,
+      "shuffle": true
+    },
+    "JDModel_normal_0907_dlk_filter_merge_second": {
+      "nums": 5000,
+      "shuffle": true
+    },
+    "JDModel_paste_0823_0827_M300_background_1_merge_second": {
+      "nums": 5000,
+      "shuffle": true
+    },
+    "JDModel_paste_0823_0906_dlc_filter_no_benchang_second": {
+      "nums": 5000,
+      "shuffle": true
+    },
+    "JDModel_paste_0823_0907_dlk_filter_merge_second": {
+      "nums": 5000,
+      "shuffle": true
+    }
+  },
+  "part_test": {}
+}

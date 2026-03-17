@@ -1,0 +1,95 @@
+
+# 三种模式
+stage_train: 'train'
+stage_valid: 'val'
+stage_test: 'test'
+
+# 数据集路径及文件类型
+data_dir: '/home/csz_changsha/data/FlySubjectAirToGround_merge/second_classifier_dataset_251120'
+npy_folder: 'npy'  # 完整路径为data_dir/npy
+label_file: 'label.csv'  # 完整路径为data_dir/label.csv
+
+# 数据集的划分（支持直接指定part_train、part_val、part_test或者直接指定数据划分配置文件 parts_config_path）
+#part_train: [
+#    'JDModel_0611_second', 'JDModel_0615_bangwan_second', 'JDModel_0618_second',
+#    'JDModel_0715_JD_background_second', 'JDModel_0715_JD_no_background_second',
+#    'JDModel_0715_T18_background_second', 'JDModel_0715_T18_no_background_second',
+#    'JDModel_T18-2_second'
+#]
+#part_val: [
+#    'JDModel_0611_second', 'JDModel_0615_bangwan_second', 'JDModel_0618_second',
+#    'JDModel_0715_JD_background_second', 'JDModel_0715_JD_no_background_second',
+#    'JDModel_0715_T18_background_second', 'JDModel_0715_T18_no_background_second',
+#    'JDModel_T18-2_second'
+#]
+
+#part_train: [
+#    'JDModel_0611_second', 'JDModel_0615_bangwan_second', 'JDModel_0618_second',
+#    'JDModel_0715_JD_background_second', 'JDModel_0715_JD_no_background_second',
+#    'JDModel_0715_T18_background_second', 'JDModel_0715_T18_no_background_second',
+#    'JDModel_0717_T18_101_1_second', 'JDModel_0717_T18_101_second', 'JDModel_T18-2_second',
+#    'T18Model_0611_second', 'T18Model_0615_bangwan_second', 'T18Model_0618_second',
+#    'T18Model_0715_JD_background_second', 'T18Model_0715_JD_no_background_second',
+#    'T18Model_0715_T18_background_second', 'T18Model_0715_T18_no_background_second',
+#    'T18Model_0717_T18_101_1_second', 'T18Model_0717_T18_101_second', 'T18Model_T18-2_second',
+#    'JDModel_0727_JD_201_second', 'JDModel_0727_JD_202_second',
+#    'JDModel_0727_T18_101_second', 'JDModel_0727_T18_101_second',
+#    'T18Model_0807_JD_part_second_0.05',
+#    'JDModel_0812_second', 'JDModel_0727_t18_101_background_second',
+#    'JDModel_0812_FC_30_second', 'JDModel_0815_JD_201_background_second',
+#    'JDModel_0815_JD_202_background_1_second', 'JDModel_0815_JD_202_background_2_second',
+#    'JDModel_0815_JD_202_background_3_second', 'JDModel_0815_JD_203_background_second',
+#    'JDModel_0815_T18_101_background_second',
+#    'T18Model_0812_FC_30_second', 'T18Model_0815_JD_201_background_second',
+#    'T18Model_0815_JD_202_background_1_second', 'T18Model_0815_JD_202_background_2_second',
+#    'T18Model_0815_JD_202_background_3_second', 'T18Model_0815_JD_203_background_second',
+#    'T18Model_0815_T18_101_background_second'
+#]
+#part_val: [
+#    'JDModel_0611_second', 'JDModel_0615_bangwan_second', 'JDModel_0618_second',
+#    'JDModel_0715_JD_background_second', 'JDModel_0715_JD_no_background_second',
+#    'JDModel_0715_T18_background_second', 'JDModel_0715_T18_no_background_second',
+#    'JDModel_0717_T18_101_1_second', 'JDModel_0717_T18_101_second', 'JDModel_T18-2_second',
+#    'T18Model_0611_second', 'T18Model_0615_bangwan_second', 'T18Model_0618_second',
+#    'T18Model_0715_JD_background_second', 'T18Model_0715_JD_no_background_second',
+#    'T18Model_0715_T18_background_second', 'T18Model_0715_T18_no_background_second',
+#    'T18Model_0717_T18_101_1_second', 'T18Model_0717_T18_101_second', 'T18Model_T18-2_second',
+#    'JDModel_0727_JD_201_second', 'JDModel_0727_JD_202_second',
+#    'JDModel_0727_T18_101_second', 'JDModel_0727_T18_101_second',
+#    'T18Model_0807_JD_part_second_0.05',
+#    'JDModel_0812_second', 'JDModel_0727_t18_101_background_second',
+#    'JDModel_0812_FC_30_second', 'JDModel_0815_JD_201_background_second',
+#    'JDModel_0815_JD_202_background_1_second', 'JDModel_0815_JD_202_background_2_second',
+#    'JDModel_0815_JD_202_background_3_second', 'JDModel_0815_JD_203_background_second',
+#    'JDModel_0815_T18_101_background_second',
+#    'T18Model_0812_FC_30_second', 'T18Model_0815_JD_201_background_second',
+#    'T18Model_0815_JD_202_background_1_second', 'T18Model_0815_JD_202_background_2_second',
+#    'T18Model_0815_JD_202_background_3_second', 'T18Model_0815_JD_203_background_second',
+#    'T18Model_0815_T18_101_background_second'
+#]
+
+#part_train: ['train_1frame', 'train_2frame', 'val_1frame', 'val_2frame']
+#part_val: ['test_1frame', 'test_2frame']
+#part_test: ['test_1frame', 'test_2frame']
+
+part_train: ['train']
+part_val: ['val']
+part_test: ['val']
+
+# 数据集parts配置文件，支持json和csv两种，参见template_dataset.csv、template_dataset.json
+#parts_config_path: '/media/linana/1276341C76340351/csz/github/AirTrack/air_track/classifier/config/dataset_JD_0918.csv'
+
+# 图像和标签类型
+img_format: '.png'
+npy_format: '.npy'
+gt_format: '.csv'
+
+# 目标类别
+classes: [
+    'neg',
+    'pos',
+]
+# 目标类别数
+nb_classes: 2
+
+max_pixel: 255  # 图像像素最大值

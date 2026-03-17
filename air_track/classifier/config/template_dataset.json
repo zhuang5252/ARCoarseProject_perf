@@ -1,0 +1,359 @@
+{
+  "part_train": {
+    "JDModel_0611_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "JDModel_0615_bangwan_second": {
+      "nums": 5000,
+      "shuffle": true
+    },
+    "JDModel_0618_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "JDModel_0702_T18_2_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "JDModel_0715_JD_background_second": {
+      "nums": 40000,
+      "shuffle": true
+    },
+    "JDModel_0715_JD_no_background_second": {
+      "nums": 40000,
+      "shuffle": true
+    },
+    "JDModel_0715_T18_background_second": {
+      "nums": 40000,
+      "shuffle": true
+    },
+    "JDModel_0715_T18_no_background_second": {
+      "nums": 40000,
+      "shuffle": true
+    },
+    "JDModel_0717_T18_101_second": {
+      "nums": 40000,
+      "shuffle": true
+    },
+    "JDModel_0727_JD_201_second": {
+      "nums": 30000,
+      "shuffle": true
+    },
+    "JDModel_0727_JD_202_second": {
+      "nums": 30000,
+      "shuffle": true
+    },
+    "JDModel_0727_T18_101_background_second": {
+      "nums": 30000,
+      "shuffle": true
+    },
+    "JDModel_0727_T18_101_second": {
+      "nums": 30000,
+      "shuffle": true
+    },
+    "JDModel_0812_FC_30_second": {
+      "nums": 30000,
+      "shuffle": true
+    },
+    "JDModel_0815_JD_201_background_second": {
+      "nums": 20000,
+      "shuffle": true
+    },
+    "JDModel_0815_JD_202_background_1_second": {
+      "nums": 20000,
+      "shuffle": true
+    },
+    "JDModel_0815_JD_202_background_2_second": {
+      "nums": 20000,
+      "shuffle": true
+    },
+    "JDModel_0815_JD_202_background_3_second": {
+      "nums": 20000,
+      "shuffle": true
+    },
+    "JDModel_0815_JD_203_background_second": {
+      "nums": 20000,
+      "shuffle": true
+    },
+    "JDModel_0815_T18_101_background_second": {
+      "nums": 20000,
+      "shuffle": true
+    },
+    "T18Model_0611_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "T18Model_0615_bangwan_second": {
+      "nums": 4000,
+      "shuffle": true
+    },
+    "T18Model_0618_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "T18Model_0702_T18_2_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "T18Model_0715_JD_background_second": {
+      "nums": 40000,
+      "shuffle": true
+    },
+    "T18Model_0715_JD_no_background_second": {
+      "nums": 40000,
+      "shuffle": true
+    },
+    "T18Model_0715_T18_background_second": {
+      "nums": 40000,
+      "shuffle": true
+    },
+    "T18Model_0715_T18_no_background_second": {
+      "nums": 40000,
+      "shuffle": true
+    },
+    "T18Model_0717_T18_101_1_second": {
+      "nums": 40000,
+      "shuffle": true
+    },
+    "T18Model_0717_T18_101_second": {
+      "nums": 40000,
+      "shuffle": true
+    },
+    "T18Model_0807_JD_part_second": {
+      "nums": 30000,
+      "shuffle": true
+    },
+    "T18Model_0812_FC_30_second": {
+      "nums": 30000,
+      "shuffle": true
+    },
+    "T18Model_0815_JD_201_background_second": {
+      "nums": 20000,
+      "shuffle": true
+    },
+    "T18Model_0815_JD_202_background_1_second": {
+      "nums": 20000,
+      "shuffle": true
+    },
+    "T18Model_0815_JD_202_background_2_second": {
+      "nums": 20000,
+      "shuffle": true
+    },
+    "T18Model_0815_JD_202_background_3_second": {
+      "nums": 20000,
+      "shuffle": true
+    },
+    "T18Model_0815_JD_203_background_second": {
+      "nums": 20000,
+      "shuffle": true
+    },
+    "T18Model_0815_T18_101_background_second": {
+      "nums": 20000,
+      "shuffle": true
+    },
+    "JDModel_0818_JD_part_second": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "JDModel_0821_M300_2_part_second": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "JDModel_0823_M300_part_second": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "JDModel_0823_JD_second": {
+      "nums": 10000000000,
+      "shuffle": true
+    }
+  },
+  "part_val": {
+    "JDModel_0611_second": {
+      "nums": 300,
+      "shuffle": true
+    },
+    "JDModel_0615_bangwan_second": {
+      "nums": 500,
+      "shuffle": true
+    },
+    "JDModel_0618_second": {
+      "nums": 300,
+      "shuffle": true
+    },
+    "JDModel_0702_T18_2_second": {
+      "nums": 300,
+      "shuffle": true
+    },
+    "JDModel_0715_JD_background_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "JDModel_0715_JD_no_background_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "JDModel_0715_T18_background_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "JDModel_0715_T18_no_background_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "JDModel_0717_T18_101_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "JDModel_0727_JD_201_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "JDModel_0727_JD_202_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "JDModel_0727_T18_101_background_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "JDModel_0727_T18_101_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "JDModel_0812_FC_30_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "JDModel_0815_JD_201_background_second": {
+      "nums": 2000,
+      "shuffle": true
+    },
+    "JDModel_0815_JD_202_background_1_second": {
+      "nums": 2000,
+      "shuffle": true
+    },
+    "JDModel_0815_JD_202_background_2_second": {
+      "nums": 2000,
+      "shuffle": true
+    },
+    "JDModel_0815_JD_202_background_3_second": {
+      "nums": 2000,
+      "shuffle": true
+    },
+    "JDModel_0815_JD_203_background_second": {
+      "nums": 2000,
+      "shuffle": true
+    },
+    "JDModel_0815_T18_101_background_second": {
+      "nums": 2000,
+      "shuffle": true
+    },
+    "T18Model_0611_second": {
+      "nums": 300,
+      "shuffle": true
+    },
+    "T18Model_0615_bangwan_second": {
+      "nums": 400,
+      "shuffle": true
+    },
+    "T18Model_0618_second": {
+      "nums": 300,
+      "shuffle": true
+    },
+    "T18Model_0702_T18_2_second": {
+      "nums": 300,
+      "shuffle": true
+    },
+    "T18Model_0715_JD_background_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "T18Model_0715_JD_no_background_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "T18Model_0715_T18_background_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "T18Model_0715_T18_no_background_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "T18Model_0717_T18_101_1_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "T18Model_0717_T18_101_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "T18Model_0727_JD_201_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "T18Model_0727_JD_202_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "T18Model_0727_T18_101_background_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "T18Model_0727_T18_101_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "T18Model_0807_JD_part_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "T18Model_0812_FC_30_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "T18Model_0815_JD_201_background_second": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "T18Model_0815_JD_202_background_1_second": {
+      "nums": 2000,
+      "shuffle": true
+    },
+    "T18Model_0815_JD_202_background_2_second": {
+      "nums": 2000,
+      "shuffle": true
+    },
+    "T18Model_0815_JD_202_background_3_second": {
+      "nums": 2000,
+      "shuffle": true
+    },
+    "T18Model_0815_JD_203_background_second": {
+      "nums": 2000,
+      "shuffle": true
+    },
+    "T18Model_0815_T18_101_background_second": {
+      "nums": 2000,
+      "shuffle": true
+    },
+    "JDModel_0818_JD_part_second": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "JDModel_0821_M300_2_part_second": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "JDModel_0823_M300_part_second": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "JDModel_0823_JD_second": {
+      "nums": 10000000000,
+      "shuffle": true
+    }
+  },
+  "part_test": {}
+}

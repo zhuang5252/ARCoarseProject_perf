@@ -1,0 +1,71 @@
+
+# 三种模式
+stage_train: 'train'
+stage_valid: 'val'
+stage_test: 'test'
+
+# 数据集路径及文件类型
+data_dir: '/home/csz_changsha/data/yanqing_data/stitch_tiny_test_data/stitched_tiny_960_540_16'
+img_folder: 'images'  # 完整路径为data_dir/stage/Images
+label_folder: 'labels'  # 完整路径为data_dir/stage/labels
+
+# 图像和标签类型
+img_format: '.jpg'
+gt_format: '.txt'
+
+# 数据集的划分
+part_train: ['0428', '0429']
+part_val: ['0428', '0429']
+part_test: ['0428', '0429']
+
+# 数据融合配置（存在admix_datasets配置，则上方重复配置失效）
+admix_datasets:
+  - data_dir: '/home/csz_changsha/data/yanqing_data/stitch_tiny_test_data/stitched_tiny_960_540_16'  # 新数据
+    parts: ['0428', '0429']  # 使用部分子集
+    weight: 0.7               # 70%比例
+  - data_dir: '/home/csz_changsha/data/yanqing_data/stitch_tiny_test_data/stitched_tiny_0514'            # 旧数据
+    parts: ['0419', '0422']   # 旧数据子集
+    weight: 0.3               # 30%比例
+
+# 目标类别
+classes: [
+  'himars_laucher',
+  'himars_carrier',
+  'jinbei',
+  'jinbei-fake',
+  'himars_laucher-fake',
+  'car'
+]
+# 目标类别数
+nb_classes: 6  # 若新旧数据类别不匹配，取其更大值，且要求新旧数据类别顺序一致
+
+# 帧对齐保存的pkl文件
+transforms_dir: ''
+
+# dataset中的frames格式
+# 只做展示使用
+frame: {
+    'part',
+    'flight_id',
+    'frame_num',
+    'img_name',
+    'img_path',
+    'have_distance',
+    'detections',
+    'error'
+}
+# 只做展示使用
+detection: {
+        'cls_name',
+        'target_id',
+        'distance',
+        'is_above_horizon',
+        'cx',
+        'cy',
+        'w',
+        'h',
+    }
+
+# opts
+max_pixel: 255  # 图像像素最大值
+offset_scale: 256.0

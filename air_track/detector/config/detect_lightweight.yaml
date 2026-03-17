@@ -1,0 +1,122 @@
+###################
+## 微小目标优化配置 - 平衡检测性能和推理效率
+seed: 128
+cuda_device: 0
+model_save_root: '/home/csz_changsha/PycharmProjects/github/zhuang5252/AirTrack_all/AirTrack_single_img/model_saved'
+detect_log: None
+
+model_params:
+  model_type: 'detect_model'
+  model_mode: 'predict'  # 推理模式
+  backbone_type: 'optimized_resnet18'  # 使用优化的ResNet18
+  backbone_name: 'SimpleOptimizedResNet18'  # 简化版，更容易集成
+  base_model_name: 'ResNet18'  # 基础模型名称
+  head_name: 'Head_2_Output'  # 使用最简单的输出头
+  head_nums: 2
+  input_frames: 1
+  input_channel: 3
+  combine_outputs_dim: 256  # 保持足够的特征维度用于小目标检测
+  combine_outputs_kernel: 1
+  output_binary_mask: True
+  down_scale: 2  # 保持较高分辨率用于小目标检测
+  nb_classes: 6
+  return_feature_map: False
+  pretrained: False
+  finetune: False
+
+dataset_params:
+  dataset_type: 'yolo_txt'
+  img_read_method: 'rgb'
+  frame_step: 0
+  input_frames: 1
+  img_size: [960, 540]  # 保持较高分辨率用于小目标检测
+  train_val_test_scale: [0.8, 0.1, 0.1]
+  down_scale: 2  # 与model_params保持一致
+  target_min_size: 2  # 支持2x2像素的极小目标
+  gamma_flag: False  # 推理时关闭gamma转换
+  gamma_loc: 0.0
+  gamma_scale: 0.2
+  return_torch_tensors: True
+  enable_augment: False  # 推理时关闭数据增强
+
+###################
+## 微小目标专用推理优化配置
+inference_params:
+  batch_size: 2  # 较小的batch size以保持精度
+  use_half_precision: True  # 使用FP16
+  use_tensorrt: False  # 是否使用TensorRT
+  use_onnx: True  # 是否使用ONNX Runtime
+  
+  # 智能量化配置
+  quantization:
+    enabled: True
+    method: 'mixed_precision'  # 混合精度量化
+    sensitive_layer_threshold: 0.05  # 敏感层阈值
+    calibration_batches: 200  # 更多校准批次
+    preserve_accuracy_threshold: 0.95  # 保持95%精度
+  
+  # 渐进式剪枝配置
+  pruning:
+    enabled: True
+    method: 'progressive'  # 渐进式剪枝
+    target_sparsity: 0.25  # 较保守的剪枝比例
+    num_stages: 5  # 更多剪枝阶段
+    sensitivity_analysis: True  # 启用敏感度分析
+    
+  # 知识蒸馏配置
+  knowledge_distillation:
+    enabled: False  # 需要教师模型时启用
+    teacher_model_path: null
+    temperature: 3.0  # 较低温度保持细节
+    alpha: 0.8  # 重视软标签
+    
+  # 模型融合配置
+  fusion:
+    enabled: True
+    fuse_conv_bn: True
+    fuse_conv_relu: True
+    
+  # 特征增强配置
+  feature_enhancement:
+    enabled: True
+    use_attention: True  # 使用注意力机制
+    use_fpn: True  # 使用特征金字塔
+    multiscale_features: True  # 多尺度特征
+
+###################
+## 轻量化训练配置（如果需要重新训练）
+train_data_loader:
+  batch_size: 16  # 增大batch size
+  num_workers: 4
+  pin_memory: True
+  shuffle: True
+
+val_data_loader:
+  batch_size: 16
+  num_workers: 4
+  pin_memory: True
+  shuffle: False
+
+test_data_loader:
+  batch_size: 1
+  num_workers: 0
+  pin_memory: True
+  shuffle: False
+
+train_params:
+  nb_epochs: 50  # 减少训练轮数
+  optimizer: 'adamw'
+  scheduler: 'CosineAnnealingLR'
+  initial_lr: 1e-4
+  grad_clip: 10
+  mask_loss: fl
+  similarity_learning: False
+  patience: 10
+  min_delta: 1e-5
+  plot_tensorboard_feature: False  # 关闭特征图绘制以节省时间
+  plot_tensorboard_feature_period: 1000
+
+  # 损失权重 - 简化版本
+  loss_scale:
+    mask: 10000
+    size: 1

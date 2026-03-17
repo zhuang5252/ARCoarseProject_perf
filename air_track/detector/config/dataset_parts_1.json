@@ -1,0 +1,21 @@
+
+{
+  "part_train":
+  {
+    "0818_JD_part_processed_640_360_11":
+    {
+      "nums": 1e10,
+      "shuffle": true
+    }
+  },
+  "part_val": {
+    "0818_JD_part_processed_640_360_11": {
+      "nums": 1e10,
+      "shuffle": true
+    }
+  },
+  "part_test":
+  {
+
+  }
+}

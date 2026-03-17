@@ -1,0 +1,87 @@
+{
+  "part_train": {
+    "20260305_jy_itv_640_merge/train": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "20260112_jy_itv_640_merge/train": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "20260112_jy_ctv_640_merge/train": {
+      "nums": 500000000000,
+      "shuffle": true
+    },
+    "20260112_jy_ftv_640_merge/train": {
+      "nums": 500000000000,
+      "shuffle": true
+    },
+    "20260305_jy_ftv_640_merge/train": {
+      "nums": 500000000000,
+      "shuffle": true
+    },
+    "20260305_jy_ctv_640_merge/train": {
+      "nums": 500000000000,
+      "shuffle": true
+    },
+    "20260112_jy_itv_background_merge/train": {
+      "nums": 1200,
+      "shuffle": true
+    },
+    "20260305_jy_ctv_background_merge/train": {
+      "nums": 1200,
+      "shuffle": true
+    },
+    "20260305_jy_ftv_background_merge/train": {
+      "nums": 1200,
+      "shuffle": true
+    },
+    "20260305_jy_itv_background_merge/train": {
+      "nums": 1200,
+      "shuffle": true
+    }
+  },
+  "part_val": {
+    "20260305_jy_itv_640_merge/val": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "20260112_jy_itv_640_merge/val": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "20260112_jy_ctv_640_merge/val": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "20260112_jy_ftv_640_merge/val": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "20260305_jy_ftv_640_merge/val": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "20260305_jy_ctv_640_merge/val": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "20260112_jy_itv_background_merge/val": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "20260305_jy_ctv_background_merge/val": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "20260305_jy_ftv_background_merge/val": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "20260305_jy_itv_background_merge/val": {
+      "nums": 10000000000,
+      "shuffle": true
+    }
+  },
+  "part_test": {}
+}

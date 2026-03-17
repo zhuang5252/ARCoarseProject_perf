@@ -1,0 +1,9 @@
+torch>=1.11.0
+madgrad
+pyyaml
+opencv-python
+pandas
+timm
+tensorboard
+numpy
+scikit-image

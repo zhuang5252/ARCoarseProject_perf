@@ -1,0 +1,99 @@
+
+# 三种模式
+stage_train: 'train'
+stage_valid: 'val'
+stage_test: 'test'
+
+# 数据集路径及文件类型
+data_dir: '/media/linana/2C5821EF5821B88A/yanqing_train_data/0816_second_classifier_dataset_0.5'
+npy_folder: 'npy'  # 完整路径为data_dir/npy
+label_file: 'label.csv'  # 完整路径为data_dir/label.csv
+
+# 数据集的划分
+#part_train: [
+#    'JDModel_0611_second', 'JDModel_0615_bangwan_second', 'JDModel_0618_second',
+#    'JDModel_0715_JD_background_second', 'JDModel_0715_JD_no_background_second',
+#    'JDModel_0715_T18_background_second', 'JDModel_0715_T18_no_background_second',
+#    'JDModel_T18-2_second'
+#]
+#part_val: [
+#    'JDModel_0611_second', 'JDModel_0615_bangwan_second', 'JDModel_0618_second',
+#    'JDModel_0715_JD_background_second', 'JDModel_0715_JD_no_background_second',
+#    'JDModel_0715_T18_background_second', 'JDModel_0715_T18_no_background_second',
+#    'JDModel_T18-2_second'
+#]
+
+part_train: [
+    'JDModel_0611_second', 'JDModel_0615_bangwan_second',
+    'JDModel_0618_second',
+    'JDModel_0715_JD_background_second', 'JDModel_0715_JD_no_background_second',
+    'JDModel_0715_T18_no_background_second',
+    'JDModel_0717_T18_101_1_second', 'JDModel_0717_T18_101_second',
+    'JDModel_0727_JD_201_second', 'JDModel_0727_JD_202_second',
+    'JDModel_0727_T18_101_background_second',
+    'JDModel_0727_T18_101_second', 'JDModel_0807_JD_part_second',
+    'JDModel_0812_FC_30_second', 'JDModel_0815_JD_201_background_second',
+    'JDModel_0815_JD_202_background_1_second', 'JDModel_0815_JD_202_background_2_second',
+    'JDModel_0815_JD_202_background_3_second', 'JDModel_0815_JD_203_background_second',
+    'JDModel_0815_T18_101_background_second', 'JDModel_0702_T18_2_second',
+
+
+    'T18Model_0611_second', 'T18Model_0615_bangwan_second',
+    'T18Model_0618_second',
+    'T18Model_0715_JD_background_second', 'T18Model_0715_JD_no_background_second',
+    'T18Model_0715_T18_background_second', 'T18Model_0715_T18_no_background_second',
+    'T18Model_0717_T18_101_1_second', 'T18Model_0717_T18_101_second',
+    'T18Model_0727_JD_201_second', 'T18Model_0727_JD_202_second',
+    'T18Model_0727_T18_101_background_second',
+    'T18Model_0727_T18_101_second', 'T18Model_0807_JD_part_second',
+    'T18Model_0812_FC_30_second', 'T18Model_0815_JD_201_background_second',
+    'T18Model_0815_JD_202_background_1_second', 'T18Model_0815_JD_202_background_2_second',
+    'T18Model_0815_JD_202_background_3_second', 'T18Model_0815_JD_203_background_second',
+    'T18Model_0815_T18_101_background_second', 'T18Model_0702_T18_2_second',
+]
+part_val: [
+    'JDModel_0611_second', 'JDModel_0615_bangwan_second',
+    'JDModel_0618_second',
+    'JDModel_0715_JD_background_second', 'JDModel_0715_JD_no_background_second',
+    'JDModel_0715_T18_no_background_second',
+    'JDModel_0717_T18_101_1_second', 'JDModel_0717_T18_101_second',
+    'JDModel_0727_JD_201_second', 'JDModel_0727_JD_202_second',
+    'JDModel_0727_T18_101_background_second',
+    'JDModel_0727_T18_101_second', 'JDModel_0807_JD_part_second',
+    'JDModel_0812_FC_30_second', 'JDModel_0815_JD_201_background_second',
+    'JDModel_0815_JD_202_background_1_second', 'JDModel_0815_JD_202_background_2_second',
+    'JDModel_0815_JD_202_background_3_second', 'JDModel_0815_JD_203_background_second',
+    'JDModel_0815_T18_101_background_second', 'JDModel_0702_T18_2_second',
+
+
+    'T18Model_0611_second', 'T18Model_0615_bangwan_second',
+    'T18Model_0618_second',
+    'T18Model_0715_JD_background_second', 'T18Model_0715_JD_no_background_second',
+    'T18Model_0715_T18_background_second', 'T18Model_0715_T18_no_background_second',
+    'T18Model_0717_T18_101_1_second', 'T18Model_0717_T18_101_second',
+    'T18Model_0727_JD_201_second', 'T18Model_0727_JD_202_second',
+    'T18Model_0727_T18_101_background_second',
+    'T18Model_0727_T18_101_second', 'T18Model_0807_JD_part_second',
+    'T18Model_0812_FC_30_second', 'T18Model_0815_JD_201_background_second',
+    'T18Model_0815_JD_202_background_1_second', 'T18Model_0815_JD_202_background_2_second',
+    'T18Model_0815_JD_202_background_3_second', 'T18Model_0815_JD_203_background_second',
+    'T18Model_0815_T18_101_background_second', 'T18Model_0702_T18_2_second',
+]
+
+#part_train: ['JDModel_0611_second']
+#part_val: ['JDModel_0611_second']
+part_test: []
+
+# 图像和标签类型
+npy_format: '.npy'
+gt_format: '.csv'
+
+# 目标类别
+classes: [
+    'neg',
+    'pos',
+]
+# 目标类别数
+nb_classes: 2
+
+max_pixel: 255  # 图像像素最大值

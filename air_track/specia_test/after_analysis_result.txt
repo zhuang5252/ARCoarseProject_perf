@@ -1,0 +1,13 @@
+Total BBoxes: 5694
+Small BBoxes (<30px): 5213
+Medium BBoxes (30-90px): 481
+Large BBoxes (>90px): 0
+Small Ratio: 91.55%
+Medium Ratio: 8.45%
+Large Ratio: 0.00%
+
+Per-class statistics:
+  cls_0: 4134 boxes (small: 4129, ratio 99.88%; medium: 5, ratio 0.12%; large: 0, ratio 0.00%)
+  cls_16: 757 boxes (small: 757, ratio 100.00%; medium: 0, ratio 0.00%; large: 0, ratio 0.00%)
+  cls_17: 384 boxes (small: 327, ratio 85.16%; medium: 57, ratio 14.84%; large: 0, ratio 0.00%)
+  cls_18: 419 boxes (small: 0, ratio 0.00%; medium: 419, ratio 100.00%; large: 0, ratio 0.00%)

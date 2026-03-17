@@ -1,0 +1,135 @@
+{
+  "part_train": {
+    "0715_T18_background": {
+      "nums": 400,
+      "shuffle": true
+    },
+    "0717_T18_101_processed_768_576_15": {
+      "nums": 600,
+      "shuffle": true
+    },
+    "0727_T18_101_background": {
+      "nums": 400,
+      "shuffle": true
+    },
+    "0727_T18_101_benchang_processed_768_576_15": {
+      "nums": 600,
+      "shuffle": true
+    },
+    "0727_T18_101_processed_768_576_15": {
+      "nums": 600,
+      "shuffle": true
+    },
+    "0727_T18_102_processed_768_576_15": {
+      "nums": 600,
+      "shuffle": true
+    },
+    "0809_T18_processed_768_576_15": {
+      "nums": 600,
+      "shuffle": true
+    },
+    "0815_T18_101_background": {
+      "nums": 400,
+      "shuffle": true
+    },
+    "0906_dlc_filter_processed_768_576_18": {
+      "nums": 3000,
+      "shuffle": true
+    },
+    "0830_FC30_s_pick_processed_768_576_15": {
+      "nums": 10000000,
+      "shuffle": true
+    },
+    "0830_FC30_x_pick_processed_768_576_15": {
+      "nums": 10000000,
+      "shuffle": true
+    },
+    "0831_FC30_s_pick_processed_768_576_15": {
+      "nums": 10000000,
+      "shuffle": true
+    },
+    "0831_FC30_x_pick_processed_768_576_15": {
+      "nums": 10000000,
+      "shuffle": true
+    },
+    "0902_FC30_s_pick_processed_768_576_15": {
+      "nums": 10000000,
+      "shuffle": true
+    },
+    "0907_background_have_target_processed_768_576_15": {
+      "nums": 10000000,
+      "shuffle": true
+    },
+    "0827_M300_background_1_merge": {
+      "nums": 1600,
+      "shuffle": true
+    }
+  },
+  "part_val": {
+    "0715_T18_background": {
+      "nums": 100,
+      "shuffle": true
+    },
+    "0717_T18_101_processed_768_576_15": {
+      "nums": 100,
+      "shuffle": true
+    },
+    "0727_T18_101_background": {
+      "nums": 100,
+      "shuffle": true
+    },
+    "0727_T18_101_benchang_processed_768_576_15": {
+      "nums": 100,
+      "shuffle": true
+    },
+    "0727_T18_101_processed_768_576_15": {
+      "nums": 100,
+      "shuffle": true
+    },
+    "0727_T18_102_processed_768_576_15": {
+      "nums": 100,
+      "shuffle": true
+    },
+    "0809_T18_processed_768_576_15": {
+      "nums": 100,
+      "shuffle": true
+    },
+    "0815_T18_101_background": {
+      "nums": 100,
+      "shuffle": true
+    },
+    "0906_dlc_filter_processed_768_576_18": {
+      "nums": 300,
+      "shuffle": true
+    },
+    "0830_FC30_s_pick_processed_768_576_15": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "0830_FC30_x_pick_processed_768_576_15": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "0831_FC30_s_pick_processed_768_576_15": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "0831_FC30_x_pick_processed_768_576_15": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "0902_FC30_s_pick_processed_768_576_15": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "0907_background_have_target_processed_768_576_15": {
+      "nums": 100000000,
+      "shuffle": true
+    },
+    "0827_M300_background_1_merge": {
+      "nums": 300,
+      "shuffle": true
+    }
+  },
+  "part_test": {}
+}

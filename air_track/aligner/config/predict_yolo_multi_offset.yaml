@@ -1,0 +1,37 @@
+# predict opts
+model_path: '/media/linana/1276341C76340351/csz/github/AirTrack/model_saved/TrEstimatorTsm/resnet34/2025_07_14_16/minimum_loss.pt'
+align_save_dir: '/media/linana/2C5821EF5821B88A/yanqing_data/0611/aligner_inter_res/align_result'
+seed: 128  # 固定随机数种子
+device: 'cuda:0'
+
+# 数据集路径及文件类型
+data_dir: '/media/linana/2C5821EF5821B88A/yanqing_data/0611'
+img_folder: 'rgb'  # 完整路径为data_dir/part/Images
+label_folder: 'label'  # 完整路径为data_dir/part/label
+
+# 图像和标签类型
+img_format: '.jpg'
+gt_format: '.txt'
+
+# 数据集的划分
+part_train: ['1']
+part_val: ['2']
+part_test: ['3']
+
+# opts
+max_pixel: 255  # 图像最大像素值
+
+# model opts
+model_params:
+  model_type: 'align_model'
+  model_cls: 'TrEstimatorTsm'
+  base_model_name: 'resnet34'
+  input_channel: 1  # 模型输入通道数，需要与下方dataset_params中的use_gray保持一致
+  duration: 2  # 时间步数
+  weight_scale: 3  # 权重系数
+  pretrained: False  # 是否使用预训练模型
+
+# dataset opts
+dataset_params:
+  img_read_method: 'gray'  # 使用哪种方式读取图像，支持 gray、rgb、unchanged，需要与上方model_params中的input_channel保持一致
+  img_size: [640, 512]  # w, h

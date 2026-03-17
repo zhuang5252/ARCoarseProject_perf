@@ -1,0 +1,131 @@
+###################
+## Model options
+seed: 128
+cuda_device: 0, 1, 2, 3, 4, 5, 6, 7  # 使用的GPU设备id，单GPU设备可设置为0或默认状态，多GPU可按照需求设置为 0, 2等任意组合
+model_save_root: '/home/csz_xishu2/PycharmProjects/github/zhuang5252/AirTrack/model_saved'
+detect_log: None  # 为None时，detect_log=模型保存路径
+
+model_params:
+  model_type: 'detect_model'  # 默认即可，无需更改
+  model_mode: 'train'  # 模型运行模式，可选：train、predict
+  backbone_type: 'official_resnet'  # backbone类型，参照模型配置文件（model_config_readme.json）
+  backbone_name: 'OfficialResNet'  # backbone名称，参照模型配置文件（model_config_readme.json）
+  base_model_name: 'ResNet18'  # 基础模型名称，参照模型配置文件（model_config_readme.json）
+  head_name: 'Head_2_Output'  # head名称，参照模型配置文件（model_config_readme.json）
+  head_nums: 2  # 输出头的数量（可选：2、3、5、6），与head_name对应
+  input_frames: 1  # 为 2 取两帧图像，为 3 取连续三帧图像(需与dataset_params中的input_frames一致)
+  input_channel: 1  # 模型输入通道数实际为 input_frames * input_channel，需要与下方dataset_params中的img_read_method保持一致
+  combine_outputs_dim: 512  # Model中fc_comb输出的特征通道数
+  combine_outputs_kernel: 1  # Model中fc_comb的kernel_size
+  output_binary_mask: True  # 输出二进制掩码
+  down_scale: 2   # 根据模型修改(模型输入512×640，输出256×320，下采样比例为2)
+  nb_classes: 5  # 类别数
+  return_feature_map: False  # 是否返回特征图（对比训练时，需与下方similarity_learning搭配使用）
+  pretrained: False  # 是否使用官方预训练模型(目前此参数已失效，直接使用下方finetune及其配置来代替)
+  finetune: False  # 是否进行模型微调
+  freeze_config:
+    finetune_model_path: '/media/linana/1276341C76340351/csz/github/AirTrack/model_saved/official_resnet/OfficialResNet/ResNet18/0906_JD_640_360_11/minimum_loss.pt'
+    freeze_strategy: 'name'  # 网络冻结策略，可选：index索引层、name网络层名称、auto动态渐进解冻
+    freeze_layers_indices: [0, 3]  # 冻结网络层(冻结第0-3层，包含3)
+    freeze_layers_names: []  # 冻结网络层(需要在实际网络结构中选择冻结的层名)
+#    freeze_layers_names: ['base_model.conv1', 'base_model.bn1', 'layer1', 'layer2', 'layer3', 'layer4']  # 冻结网络层(需要在实际网络结构中选择冻结的层名)
+    unfreeze_epochs: [12, 24, 36]  # 在指定epoch自动解冻下一阶段
+    constant_unfreeze_layers: ['fc_comb', 'head']
+
+dataset_params:
+  dataset_type: 'yolo_txt'  # 数据集格式，可选：yolo_txt、json、AR_csv、aot
+  img_read_method: 'gray'  # 使用哪种方式读取图像，支持 gray、rgb、unchanged, admix(rgb、gray、filter混合，还是3通道输入)，需要与上方model_params中的input_channel保持一致
+  frame_step: 0  # 为 1 取相邻图像，为 2 表示连续帧数的间隔为2（步长）
+  input_frames: 1  # 为 2 取两帧图像，为 3 取连续三帧图像(需与model_params中的input_frames一致)
+  img_size: [640, 512]  # 输入图像尺寸(w, h)
+  train_val_test_scale: None  # 训练集、验证集、测试集比例，默认为None，即使用全部数据集, 也可设置为[0.9, 0.1, 0.0]
+  copy_split_data: False  # 是否按照train_val_test_scale拆分数据集后，复制到train、val、test文件夹中
+  down_scale: 2  # 需与model_params中的down_scale保持一致
+  target_min_size: 10  # 图像最小目标框
+  frame_align_flag: False  # 是否使用帧对齐模块配准图像
+  gamma_flag: True  # 是否使用gamma转换
+  gamma_loc: 0.0  # gamma转换的np.random.normal的均值
+  gamma_scale: 0.2  # gamma转换的np.random.normal的标准差
+  return_torch_tensors: True  # 是否返回torch_tensors
+  enable_augment: True  # 是否使用数据增强（如果图像为灰度或者红外，下方color的prob需要为0.0）
+  # ==== 主配置项：定义数据增强策略 ====
+  augmentation:
+    # ----------------- 几何翻转增强配置 -----------------
+    flip:
+      prob: 0.5       # 总触发概率（含水平/垂直） (0.0-1.0)
+      hflip_prob: 0.5 # 水平翻转概率（在触发翻转时生效）
+      vflip_prob: 0.3 # 垂直翻转概率（在触发翻转时生效）
+
+    # ---------------- 仿射变换增强配置 ----------------
+    affine:
+      prob: 0.5       # 总触发概率 (0.0-1.0)
+      scale: # 缩放配置
+        x: [0.9, 1.1]  # 宽度缩放系数（0.8=缩至80%）
+        y: [0.9, 1.1]  # 高度缩放系数（1.1=放大至110%）
+      translate: # 平移配置（比例制）
+        x: [-0.05, 0.05] # 水平平移（-0.1=左移10%宽度）
+        y: [-0.05, 0.05]   # 垂直平移（0.1=下移10%高度）
+      rotate: [-90, 90] # 旋转角度（单位：度，负=顺时针）
+      shear: [-5, 5]  # 剪切角度（单位：度）
+
+    # ---------------- 颜色空间增强配置 ----------------
+    color:
+      prob: 0.0       # 总触发概率 (0.0-1.0)
+      hue_shift: [-30, 30]      # 色相偏移（-180~180，HSV色彩空间）
+      saturation_shift: [-50, 50]  # 饱和度偏移（-100~100，负数=降低饱和度）
+      grayscale_alpha: [0.0, 1.0]  # 灰度化系数（0.0=原图，1.0=全灰度）
+      contrast_range: [0.7, 1.5]  # 对比度系数（<1.0=降低对比度，1.0=原图，>1.0增强对比度）
+
+    # ---------------- 噪声与模糊增强配置 ----------------
+    noise:
+      prob: 0.0       # 总触发概率(0.0-1.0)
+      blur_sigma: [0.0, 2.0]     # 高斯模糊强度（单位：像素，数值越大越模糊）
+      gaussian_noise_scale: [0.0, 0.1] # 噪声强度（0.1=25.5像素波动，实际强度=值×255）
+
+###################
+## Dataloader options
+train_data_loader:
+  batch_size: 8
+  num_workers: 2
+  pin_memory: True
+  shuffle: True
+
+val_data_loader:
+  batch_size: 8
+  num_workers: 2
+  pin_memory: True
+  shuffle: False
+
+test_data_loader:
+  batch_size: 1
+  num_workers: 0
+  pin_memory: True
+  shuffle: False
+
+###################
+## Train params
+train_params:
+  nb_epochs: 20
+  optimizer: 'madgrad'  # 优化器（只做展示使用）
+  scheduler: 'CosineAnnealingWarmRestarts'  # 学习率调度器（只做展示使用）
+  scheduler_period: 16  # CosineAnnealingWarmRestarts 学习率调度器的T_0参数
+  scheduler_t_mult: 1.41421  # CosineAnnealingWarmRestarts 学习率调度器的T_mult参数
+  initial_lr: 2.5e-5  # 初始学习率
+  grad_clip: 16  # 梯度裁剪参数
+  mask_loss: fl  # mask输出的损失函数
+  similarity_learning: False  # 是否使用相似性学习以训练模型对RGB和灰度的适应性，确保上方img_read_method为admix、return_feature_map为True，similarity_learning才能为True
+  patience: 16  # 早停最大等待轮数，设置为与scheduler_period一致
+  min_delta: 0.0  # 早停最小变化值（1e-4）
+  plot_tensorboard_feature: True  # 是否在tensorboard中绘制特征图
+  plot_tensorboard_feature_period: 500  # 特征图保存周期，即每隔多少个batch保存一次特征图(plot_tensorboard_feature为False时，该参数无效)
+
+  # 计算loss的各项权重
+  loss_scale:
+    mask: 10000
+    cls: 2000
+    size: 1
+    offset: 0.25
+    distance: 1
+    tracking: 1
+    sim: 1
+    above_horizon: 0.1

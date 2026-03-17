@@ -1,0 +1,128 @@
+
+# 三种模式
+stage_train: 'train'
+stage_valid: 'val'
+stage_test: 'test'
+
+# 数据集路径及文件类型
+data_dir: '/media/linana/2C5821EF5821B88A/yanqing_train_data'
+img_folder: 'images'  # 完整路径为data_dir/stage/Images
+label_folder: 'labels'  # 完整路径为data_dir/stage/labels
+
+# 图像和标签类型
+img_format: '.jpg'
+gt_format: '.txt'
+
+# 数据集的划分（支持直接指定part_train、part_val、part_test或者直接指定数据划分配置文件 parts_config_path）
+#part_train: ['0611_processed_768_576_15/train', '0615_bangwan_processed_768_576_15/train',
+#             '0615_processed_768_576_15/train', '0618_processed_768_576_15/train',
+#             '0702_T18_1_processed_768_576_15/train', '0702_T18_2_processed_768_576_15/train',
+#             '0715_JD_background/train', '0715_JD_no_background_processed_768_576_15/train',
+#             '0715_T18_background/train', '0715_T18_no_background_processed_768_576_15/train',
+#             '0717_T18_101_processed_768_576_15/train',
+#             '0727_JD_201_processed_768_576_15/train', '0727_JD_202_processed_768_576_15/train',
+#             '0727_T18_101_processed_768_576_15/train', '0727_T18_102_processed_768_576_15/train',
+#             '0807_JD_part_processed_768_576_15/train', '0812_FC30_processed_768_576_15/train',
+#             '0727_T18_101_background/train'
+#]
+#part_val: ['0611_processed_768_576_15/val', '0615_bangwan_processed_768_576_15/val',
+#           '0615_processed_768_576_15/val', '0618_processed_768_576_15/val',
+#           '0702_T18_1_processed_768_576_15/val', '0702_T18_2_processed_768_576_15/val',
+#           '0715_JD_background/val', '0715_JD_no_background_processed_768_576_15/val',
+#           '0715_T18_background/val', '0715_T18_no_background_processed_768_576_15/val',
+#           '0717_T18_101_processed_768_576_15/val',
+#           '0727_JD_201_processed_768_576_15/val', '0727_JD_202_processed_768_576_15/val',
+#           '0727_T18_101_processed_768_576_15/val', '0727_T18_102_processed_768_576_15/val',
+#           '0807_JD_part_processed_768_576_15/val', '0812_FC30_processed_768_576_15/val',
+#           '0727_T18_101_background/val'
+#]
+#part_train: ['0715_JD_background_use_0611', '0715_JD_background_use_0615_bangwan',
+#             '0715_T18_background_use_0611', '0715_T18_background_use_0615_bangwan',
+#             '0727_T18_101_background_use_0611', '0727_T18_101_background_use_0615_bangwan',
+#             '0815_JD_201_background_use_0611', '0815_JD_201_background_use_0615_bangwan',
+#             '0815_JD_202_background_1_use_0611', '0815_JD_202_background_1_use_0615_bangwan',
+#             '0815_JD_202_background_2_use_0611', '0815_JD_202_background_2_use_0615_bangwan',
+#             '0815_JD_202_background_3_use_0611', '0815_JD_202_background_3_use_0615_bangwan',
+#             '0815_JD_203_background_use_0611', '0815_JD_203_background_use_0615_bangwan',
+#             '0815_T18_101_background_use_0611', '0815_T18_101_background_use_0615_bangwan'
+#]
+#
+#part_val: ['0715_JD_background_use_0611', '0715_JD_background_use_0615_bangwan',
+#             '0715_T18_background_use_0611', '0715_T18_background_use_0615_bangwan',
+#             '0727_T18_101_background_use_0611', '0727_T18_101_background_use_0615_bangwan',
+#             '0815_JD_201_background_use_0611', '0815_JD_201_background_use_0615_bangwan',
+#             '0815_JD_202_background_1_use_0611', '0815_JD_202_background_1_use_0615_bangwan',
+#             '0815_JD_202_background_2_use_0611', '0815_JD_202_background_2_use_0615_bangwan',
+#             '0815_JD_202_background_3_use_0611', '0815_JD_202_background_3_use_0615_bangwan',
+#             '0815_JD_203_background_use_0611', '0815_JD_203_background_use_0615_bangwan',
+#             '0815_T18_101_background_use_0611', '0815_T18_101_background_use_0615_bangwan'
+#]
+#part_train: ['0917_JD_filter_processed_640_360_16', '0917_JD_background'
+#]
+#part_val: ['0917_JD_filter_processed_640_360_16', '0917_JD_background'
+#]
+#part_test: []
+
+# 数据集parts配置文件，支持json和csv两种，参见template_dataset.csv、template_dataset.json
+parts_config_path: '/media/linana/1276341C76340351/csz/github/AirTrack/air_track/detector/config/dataset_dlk_parts_registry_normal_JD_0918.csv'
+
+# 目标类别
+classes: [
+  'himars_laucher',
+  'hismars_carrier',
+  'jinbei',
+  'jinbei-fake',
+  'haimars_laucher-fake',
+  'car',
+  'LT-2000',
+  'tianbing-fasheche',
+  'aiguozhe-fasheche',
+  'tiangong-fasheche',
+  'tianbing-leidache',
+  'aiguozhe-leidache',
+  'tiangong-leidache',
+  'tianbing-zhihuiche',
+  'aiguozhe-zhihuiche',
+  'tiangong-zhihuiche',
+  'hanma',
+  'szb',
+  'himars_laucher-wzw',
+  'zhangpeng',
+  'duci-fasheche',
+  'PTarget',
+  'himars_laucher-yellow',
+  'yunbao',
+  'duci-new',
+  'yunbao-new'
+]
+# 目标类别数
+nb_classes: 26
+
+# dataset中的frames格式
+# 只做展示使用
+frame: {
+    'part',
+    'flight_id',
+    'frame_num',
+    'img_name',
+    'img_path',
+    'have_distance',
+    'img_width',
+    'img_height',
+    'detections',
+}
+# 只做展示使用
+detection: {
+        'target_id',
+        'cls_name',
+        'distance',
+        'is_above_horizon',
+        'cx',
+        'cy',
+        'w',
+        'h',
+    }
+
+# opts
+max_pixel: 255  # 图像像素最大值
+offset_scale: 256.0

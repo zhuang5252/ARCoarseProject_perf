@@ -1,0 +1,67 @@
+
+# 三种模式
+stage_train: 'train'
+stage_valid: 'valid'
+stage_test: 'test'
+
+# 数据集路径及文件类型
+data_dir: '/home/csz_changsha/data/AR_2511/converted_data'
+img_folder: 'Images'  # 完整路径为data_dir/part/Images
+label_file: 'ImageSets/groundtruth.csv'  # 完整路径为data_dir/part/ImageSets
+
+# 图像和标签类型
+img_format: '.png'
+gt_format: '.csv'
+
+# 目标类别
+classes: [
+    'None',
+    'object',
+]
+# 目标类别数
+nb_classes: 2
+
+# 帧对齐保存的pkl文件
+transforms_dir: ''
+
+# 数据集的划分
+part_train: [
+             'scne4_ch3', 'scne4_ch4',
+             'scne6_ch1', 'scne6_ch4',
+             'scne7_ch3', 'scne7_ch4',
+             'scne15_ch2',
+             'scne30_1_ch3', 'scne30_1_ch4',
+             'scne30_2_ch3', 'scne30_2_ch4',
+             'scne31_ch2']
+part_val: ['scne1_ch3', 'scne4_ch1', 'scne6_ch2', 'scne7_ch1',
+           'scne15_ch1', 'scne30_1_ch2', 'scne30_2_ch1', 'scne31_ch1']
+part_test: ['scne1_ch1', 'scne1_ch2', 'scne1_ch3', 'scne4_ch2', 'scne6_ch3', 'scne7_ch2',
+            'scne15_ch1', 'scne30_1_ch4', 'scne30_2_ch2', 'scne31_ch1']
+
+# dataset中的frames格式
+# 只做展示使用
+frame: {
+    'part',
+    'flight_id',
+    'frame_num',
+    'img_name',
+    'img_path',
+    'have_distance',
+    'detections',
+    'error'
+}
+# 只做展示使用
+detection: {
+        'cls_name',
+        'target_id',
+        'distance',
+        'is_above_horizon',
+        'cx',
+        'cy',
+        'w',
+        'h',
+    }
+
+# opts
+max_pixel: 65535  # 图像像素最大值
+offset_scale: 256.0

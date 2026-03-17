@@ -1,0 +1,60 @@
+###################
+## Model options
+seed: 128
+device: 'cuda:0'
+model_save_root: '/home/csz_changsha/PycharmProjects/github/zhuang5252/AirTrack/model_saved'
+align_log: None  # 为None时，align_log=模型保存路径
+
+model_params:
+  model_type: 'align_model'
+  model_cls: 'TrEstimatorTsm'
+  base_model_name: 'resnet34'
+  input_channel: 1  # 模型输入通道数，需要与下方dataset_params中的use_gray保持一致
+  duration: 2  # 时间步数
+  weight_scale: 3  # 权重系数
+  pretrained: False  # 是否使用预训练模型
+
+dataset_params:
+  img_read_method: 'gray'  # 使用哪种方式读取图像，支持 gray、rgb、unchanged，需要与上方model_params中的input_channel保持一致
+  img_size: [640, 512]  # w, h
+  train_sample_nums: 30000  # 训练集最大采样数
+  val_sample_nums: 3000  # 验证集最大采样数
+  downscale: 1  # 原始图像缩放比例
+  sigma_scale: 0.0025  # 图像缩放参数
+  sigma_angle: 0.2  # 图像旋转参数
+  sigma_offset: 12.0  # 图像位移参数
+  return_torch_tensors: True  # 是否返回torch张量
+
+
+###################
+## Data loader options
+train_data_loader:
+  batch_size: 16
+  num_workers: 4
+
+val_data_loader:
+  batch_size: 16
+  num_workers: 4
+
+test_data_loader:
+  batch_size: 16
+  num_workers: 4
+
+###################
+## Train params
+train_params:
+  nb_epochs: 400
+  optimizer: 'madgrad'  # 优化器（只做展示使用）
+  scheduler: 'CosineAnnealingWarmRestarts'  # 学习率调度器（只做展示使用）
+  scheduler_period: 16  # 学习率调度器cosine第一个周期包含的epoch数量
+  scheduler_t_mult: 1.41421  # 学习率调度器的周期长度乘数：每个新周期的长度是前一个周期的 T_mult 倍
+  initial_lr: 1e-3  # 初始学习率
+  grad_clip: 2  # 梯度裁剪阈值系数
+  patience: 50  # 早停最大等待轮数，设置为与scheduler_period一致
+  min_delta: 0.0  # 早停最小变化值（1e-4）
+
+  # 计算loss的各项权重
+  loss_scale:
+    dx: 1
+    dy: 1
+    angle: 20

@@ -1,0 +1,46 @@
+{
+  "model_fixed collocation": [
+    {
+      "backbone_type": "official_hrnet",
+      "backbone_name": ["OfficialHRNet_2_Stage", "OfficialHRNet_5_Stage"],
+      "base_model_name": ["hrnet_w18", "hrnet_w32", "hrnet_w48"],
+      "head_name": ["Head_2_Output", "Head_3_Output", "Head_5_Output", "Head_6_Output"],
+    },
+    {
+      "backbone_type": "customize_hrnet",
+      "backbone_name": "CustomizeHRNet",
+      "base_model_name": ["hrnet_w18", "hrnet_w32", "hrnet_w48"],
+      "head_name": ["Head_2_Output", "Head_3_Output", "Head_5_Output", "Head_6_Output"],
+    },
+    {
+      "backbone_type": "official_resnet",
+      "backbone_name": "OfficialResNet",
+      "base_model_name": ["ResNet18", "ResNet34", "ResNet50", "ResNet101", "ResNet152"],
+      "head_name": ["Head_2_Output", "Head_3_Output", "Head_5_Output", "Head_6_Output"],
+    },
+    {
+      "backbone_type": "customize_resnet",
+      "backbone_name": ["CustomizeResNet12", "CustomizeResNet18", "CustomizeResNet34", "CustomizeResNet50"],
+      "base_model_name": "",
+      "head_name": ["Head_2_Output", "Head_3_Output", "Head_5_Output", "Head_6_Output"],
+    },
+    {
+      "backbone_type": "official_mobilenet_efficientnet",
+      "backbone_name": ["OfficialMobileNetV2"],
+      "base_model_name": "mobilenet_v2",
+      "head_name": ["Head_2_Output", "Head_3_Output", "Head_5_Output", "Head_6_Output"],
+    },
+    {
+      "backbone_type": "official_mobilenet_efficientnet",
+      "backbone_name": ["OfficialEfficientNet"],
+      "base_model_name": ["efficientnet_b0 ~ efficientnet_b7"],
+      "head_name": ["Head_2_Output", "Head_3_Output", "Head_5_Output", "Head_6_Output"],
+    },
+    {
+      "backbone_type": "customize_ghostnet",
+      "backbone_name": ["GhostNet12", "GhostNet12Lite"],
+      "base_model_name": "",
+      "head_name": ["Head_2_Output", "Head_3_Output", "Head_5_Output", "Head_6_Output"],
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+###################
+## Model options
+seed: 128
+cuda_device: 0, 1, 2, 3, 4, 5, 6, 7  # 使用的GPU设备id，单GPU设备可设置为0或默认状态，多GPU可按照需求设置为 0, 2等任意组合
+model_save_root: '/home/csz_changsha/PycharmProjects/github/zhuang5252/AirTrack_all/AirTrack_single_img/model_saved'
+detect_log: None  # 为None时，detect_log=模型保存路径
+
+model_params:
+  model_type: 'detect_model'
+  model_cls: 'ResNet_2_Output_Customize'  # 需要设置为hrnet_train.py中的网络定义，
+  # 可选：HRNet_2_Output、HRNet_3_Output、HRNet_5_Output、HRNet_6_Output、HRNet_5_Stage_5_Output、
+  # ResNet_2_Output_Customize、HRNet_5_Output_Customize、ResNet_5_Output_Customize
+  base_model_name: 'ResNet18'
+  input_frames: 1  # 为 2 取两帧图像，为 3 取连续三帧图像(需与dataset_params中的input_frames一致)
+  input_channel: 1  # 模型输入通道数实际为 input_frames * input_channel，需要与下方dataset_params中的use_gray保持一致
+  combine_outputs_dim: 512  # HRNet中fc_comb输出的特征通道数
+  combine_outputs_kernel: 1  # HRNet中fc_comb的kernel_size
+  output_binary_mask: True  # 输出二进制掩码
+  down_scale: 2   # 根据模型修改(模型输入512×640，输出256×320，下采样比例为2)
+  nb_classes: 2  # 类别数
+  similarity_learning: False  # 是否使用相似性学习以训练模型对RGB和灰度的适应性，确保下方img_read_method为 admix 才能为True
+  pretrained: False  # 是否使用预训练模型
+
+dataset_params:
+  img_read_method: 'gray'  # 使用哪种方式读取图像，支持 gray、rgb、unchanged，需要与上方model_params中的input_channel保持一致
+  img_size: [640, 512]  # 输入图像尺寸(w, h)
+  down_scale: 2  # 需与model_params中的down_scale保持一致
+  target_min_size: 10  # 图像最小目标框
+  gamma_flag: True  # 是否使用gamma转换
+  gamma_loc: 0.0  # gamma转换的np.random.normal的均值
+  gamma_scale: 0.2  # gamma转换的np.random.normal的标准差
+  return_torch_tensors: True  # 是否返回torch_tensors
+  enable_augment: True  # 是否使用数据增强（如果图像为灰度或者红外，下方color的prob需要为0.0）
+  # ==== 主配置项：定义数据增强策略 ====
+  augmentation:
+    # ----------------- 几何翻转增强配置 -----------------
+    flip:
+      prob: 0.5       # 总触发概率（含水平/垂直） (0.0-1.0)
+      hflip_prob: 0.5 # 水平翻转概率（在触发翻转时生效）
+      vflip_prob: 0.3 # 垂直翻转概率（在触发翻转时生效）
+
+    # ---------------- 仿射变换增强配置 ----------------
+    affine:
+      prob: 0.5       # 总触发概率 (0.0-1.0)
+      scale: # 缩放配置
+        x: [0.9, 1.1]  # 宽度缩放系数（0.8=缩至80%）
+        y: [0.9, 1.1]  # 高度缩放系数（1.1=放大至110%）
+      translate: # 平移配置（比例制）
+        x: [-0.05, 0.05] # 水平平移（-0.1=左移10%宽度）
+        y: [-0.05, 0.05]   # 垂直平移（0.1=下移10%高度）
+      rotate: [-5, 5] # 旋转角度（单位：度，负=顺时针）
+      shear: [-5, 5]  # 剪切角度（单位：度）
+
+    # ---------------- 颜色空间增强配置 ----------------
+    color:
+      prob: 0.0       # 总触发概率 (0.0-1.0)     如果图像为灰度或者红外，这里的prob需要为0.0
+      hue_shift: [-30, 30]      # 色相偏移（-180~180，HSV色彩空间）
+      saturation_shift: [-50, 50]  # 饱和度偏移（-100~100，负数=降低饱和度）
+      grayscale_alpha: [0.0, 1.0]  # 灰度化系数（0.0=原图，1.0=全灰度）
+      contrast_range: [0.7, 1.5]  # 对比度系数（<1.0=降低对比度，1.0=原图，>1.0增强对比度）
+
+    # ---------------- 噪声与模糊增强配置 ----------------
+    noise:
+      prob: 0.5       # 总触发概率(0.0-1.0)
+      blur_sigma: [0.0, 2.0]     # 高斯模糊强度（单位：像素，数值越大越模糊）
+      gaussian_noise_scale: [0.0, 0.1] # 噪声强度（0.1=25.5像素波动，实际强度=值×255）
+
+###################
+## Dataloader options
+train_data_loader:
+  batch_size: 4
+  num_workers: 0
+
+val_data_loader:
+  batch_size: 4
+  num_workers: 0
+
+
+###################
+## Train params
+train_params:
+  nb_epochs: 20
+  optimizer: 'madgrad'  # 优化器（只做展示使用）
+  scheduler: 'CosineAnnealingWarmRestarts'  # 学习率调度器（只做展示使用）
+  scheduler_period: 16  # CosineAnnealingWarmRestarts 学习率调度器的T_0参数
+  scheduler_t_mult: 1.41421  # CosineAnnealingWarmRestarts 学习率调度器的T_mult参数
+  initial_lr: 2.5e-5  # 初始学习率
+  grad_clip: 16  # 梯度裁剪参数
+  mask_loss: fl  # mask输出的损失函数
+  patience: 16  # 早停最大等待轮数，设置为与scheduler_period一致
+  min_delta: 0.0  # 早停最小变化值（1e-4）
+
+  # 计算loss的各项权重
+  loss_scale:
+    mask: 10000
+    cls: 2000
+    size: 1
+    offset: 0.25
+    distance: 1
+    tracking: 1
+    sim: 1
+    above_horizon: 0.1

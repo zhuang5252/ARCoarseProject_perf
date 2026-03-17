@@ -1,0 +1,63 @@
+
+# 三种模式
+stage_train: 'train'
+stage_valid: 'val'
+stage_test: 'test'
+
+# 数据集路径及文件类型
+data_dir: '/home/csz_changsha/data/yanqing_data/hongniu_0526'
+img_folder: 'rgb_filter'  # 完整路径为data_dir/stage/Images
+label_folder: 'rgb_labels'  # 完整路径为data_dir/stage/labels
+
+# 图像和标签类型
+img_format: '.jpg'
+gt_format: '.txt'
+
+# 数据集的划分
+part_train: ['data2', 'voc1', 'voc2', 'voc3', 'voc4', 'voc5', 'voc6']
+part_val: ['data2', 'voc1', 'voc2', 'voc3', 'voc4', 'voc5', 'voc6']
+part_test: ['data2', 'voc1', 'voc2', 'voc3', 'voc4', 'voc5', 'voc6']
+
+# 目标类别
+classes: [
+    'HongNiu',
+    'HongNiu-fake',
+    'Xuebi',
+    'Xuebi-fake',
+    'Kele',
+    'Kele-fake'
+]
+# 目标类别数
+nb_classes: 6
+
+# 帧对齐保存的pkl文件
+transforms_dir: ''
+
+# dataset中的frames格式
+# 只做展示使用
+frame: {
+    'part',
+    'flight_id',
+    'frame_num',
+    'img_name',
+    'img_path',
+    'have_distance',
+    'img_width',
+    'img_height',
+    'detections',
+}
+# 只做展示使用
+detection: {
+        'target_id',
+        'cls_name',
+        'distance',
+        'is_above_horizon',
+        'cx',
+        'cy',
+        'w',
+        'h',
+    }
+
+# opts
+max_pixel: 255  # 图像像素最大值
+offset_scale: 256.0

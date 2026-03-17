@@ -1,0 +1,17 @@
+###################
+## Second classifier options
+
+second_classifier_params:
+  save_path: '/home/csz_changsha/data/AR_2511/second_classifier_dataset_2frame'  # 二级分类器数据保存路径
+  save_img_flag: True  # 是否保存图像，默认不保存，图像只是作为可视化数据，真正使用的数据是npy格式的numpy数据
+  save_frame_num: inf  # 一级检测器检测的帧数，二级分类器实际保存数据量为 save_frame_num * object_nums
+  per_frame_object_nums: inf  # 每帧检测到的目标数量只保留真目标和object_nums-1个假目标
+  save_data_size: None  # [w, h]，二级分类器数据保存尺寸，如：[64, 64]即为指定尺寸抠图，None即为按照一级检测的bbox最大边长二倍抠图
+  pos_overlap_threshold: 0.5  # 判断正样本的阈值（判断预测框与标签框的交集面积是否超过标签框面积的50%）
+  nb_classes: 2  # 类别数
+  # 目标类别
+  classes: [
+    'neg',
+    'pos',
+  ]
+  max_pixel: 65535  # 图像像素最大值

@@ -1,0 +1,183 @@
+###################
+## 优化ResNet18配置 - 专为红外弱小目标检测优化
+## 针对2x2、3x3像素目标的检测性能和推理效率平衡
+seed: 128
+cuda_device: 0
+model_save_root: '/home/csz_changsha/PycharmProjects/github/zhuang5252/AirTrack_all/AirTrack_single_img/model_saved'
+detect_log: None
+
+model_params:
+  model_type: 'detect_model'
+  model_mode: 'predict'  # 推理模式
+  backbone_type: 'official_resnet_new'  # 使用优化的ResNet
+  backbone_name: 'OptimizedResNet'  # 优化ResNet backbone
+  base_model_name: 'ResNet18'  # 基础模型
+  head_name: 'OptimizedHead_2_Output'  # 优化的输出头
+  head_nums: 2
+  input_frames: 1
+  input_channel: 3
+  combine_outputs_dim: 256  # 保持足够的特征维度
+  combine_outputs_kernel: 1
+  output_binary_mask: True
+  down_scale: 2  # 保持较高分辨率用于小目标检测
+  nb_classes: 6
+  return_feature_map: False
+  pretrained: False
+  finetune: False
+  
+  # ResNet优化配置
+  use_depthwise: True      # 使用深度可分离卷积减少参数
+  use_attention: True      # 使用注意力机制增强小目标特征
+  use_multiscale: False    # 多尺度特征提取（可选）
+  use_fpn: True           # 使用特征金字塔网络
+  
+  # 输出头优化级别
+  head_optimization_level: 'balanced'  # conservative, balanced, aggressive, ultra_light
+
+dataset_params:
+  dataset_type: 'yolo_txt'
+  img_read_method: 'rgb'
+  frame_step: 0
+  input_frames: 1
+  img_size: [960, 540]  # 保持较高分辨率
+  train_val_test_scale: [0.8, 0.1, 0.1]
+  down_scale: 2
+  target_min_size: 2  # 支持2x2像素的极小目标
+  gamma_flag: False
+  gamma_loc: 0.0
+  gamma_scale: 0.2
+  return_torch_tensors: True
+  enable_augment: False
+
+###################
+## 渐进式优化配置
+progressive_optimization:
+  enabled: True
+  
+  # 阶段1: 基础优化
+  stage1:
+    name: "基础优化"
+    use_depthwise: False
+    use_attention: True
+    use_fpn: True
+    head_optimization_level: 'conservative'
+    
+  # 阶段2: 平衡优化
+  stage2:
+    name: "平衡优化"
+    use_depthwise: True
+    use_attention: True
+    use_fpn: True
+    head_optimization_level: 'balanced'
+    
+  # 阶段3: 激进优化
+  stage3:
+    name: "激进优化"
+    use_depthwise: True
+    use_attention: False
+    use_fpn: False
+    head_optimization_level: 'aggressive'
+
+###################
+## 推理优化配置
+inference_params:
+  batch_size: 2
+  use_half_precision: True
+  use_tensorrt: False
+  use_onnx: True
+  
+  # 智能量化配置
+  quantization:
+    enabled: True
+    method: 'mixed_precision'
+    sensitive_layers: ['conv1', 'layer1', 'fpn']  # 保持FP16的敏感层
+    calibration_batches: 200
+    preserve_accuracy_threshold: 0.95
+  
+  # 渐进式剪枝配置
+  pruning:
+    enabled: True
+    method: 'progressive'
+    target_sparsity: 0.25  # 保守的剪枝比例
+    num_stages: 5
+    sensitivity_analysis: True
+    # 层级剪枝比例
+    layer_specific_ratios:
+      'conv1': 0.1      # stem层保守剪枝
+      'layer1': 0.15    # 浅层保守剪枝
+      'layer2': 0.25    # 中层适度剪枝
+      'layer3': 0.3     # 深层可以更多剪枝
+      'layer4': 0.35
+      'fpn': 0.2        # FPN层保守剪枝
+      'head': 0.15      # 输出头保守剪枝
+    
+  # 知识蒸馏配置
+  knowledge_distillation:
+    enabled: False
+    teacher_model_path: null
+    temperature: 3.0
+    alpha: 0.8
+    
+  # 模型融合配置
+  fusion:
+    enabled: True
+    fuse_conv_bn: True
+    fuse_conv_relu: True
+
+###################
+## 训练配置（如果需要重新训练）
+train_data_loader:
+  batch_size: 8  # 适中的batch size
+  num_workers: 4
+  pin_memory: True
+  shuffle: True
+
+val_data_loader:
+  batch_size: 8
+  num_workers: 4
+  pin_memory: True
+  shuffle: False
+
+test_data_loader:
+  batch_size: 1
+  num_workers: 0
+  pin_memory: True
+  shuffle: False
+
+train_params:
+  nb_epochs: 50
+  optimizer: 'adamw'
+  scheduler: 'CosineAnnealingLR'
+  initial_lr: 1e-4
+  grad_clip: 10
+  mask_loss: fl
+  similarity_learning: False
+  patience: 15
+  min_delta: 1e-5
+  plot_tensorboard_feature: False
+  plot_tensorboard_feature_period: 1000
+
+  # 损失权重
+  loss_scale:
+    mask: 10000
+    size: 1
+
+###################
+## 性能基准配置
+benchmark:
+  input_shapes:
+    - [1, 3, 540, 960]   # 标准输入
+    - [1, 3, 270, 480]   # 小尺寸输入
+    - [4, 3, 540, 960]   # 批量输入
+  
+  metrics:
+    - 'inference_time'
+    - 'memory_usage'
+    - 'model_size'
+    - 'flops'
+    - 'parameters'
+  
+  target_performance:
+    inference_time_ms: 10    # 目标推理时间
+    model_size_mb: 20        # 目标模型大小
+    accuracy_retention: 0.95  # 精度保持率

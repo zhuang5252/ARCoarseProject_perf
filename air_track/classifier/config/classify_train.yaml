@@ -1,0 +1,85 @@
+###################
+## Model options
+seed: 128
+device: 'cuda:0'
+model_save_root: '/home/csz_changsha/PycharmProjects/github/zhuang5252/AirTrack/model_saved'
+classify_log: None  # 为None时，classify_log=模型保存路径
+
+model_params:
+  model_type: 'second_classifier'
+  model_mode: 'train'  # 模型运行模式，可选：train、predict
+  model_cls: 'binary_resnet'  # 模型类名，可选：official_resnet、binary_resnet
+  base_model_name: 'BinaryResNet'  # 模型名称，可选：(resnet18、resnet34、resnet50、resnet101、resnet152)、BinaryResNet
+  input_channel: 1 # 输入通道数
+  nb_classes: 2  # 类别数
+  pretrained: False  # 是否使用预训练模型
+
+dataset_params:
+  img_size: [64, 64]  # w, h
+  scale_factor: None  # 训练集和验证集的比例（训练集占 0.85），为None时，训练集和验证集不按照比例划分
+  copy_split_data: False  # 是否按照上述比例拆分数据集后，复制到train、val文件夹中
+  normalize: True  # 是否归一化
+  normalize_to_range: [0, 1]  # 归一化后的区间范围
+  return_torch_tensors: True  # 是否返回torch张量
+  enable_augment: False  # 是否使用数据增强（如果图像为灰度或者红外，下方color的prob需要为0.0）
+  # ==== 主配置项：定义数据增强策略 ====
+  augmentation:
+    # ----------------- 几何翻转增强配置 -----------------
+    flip:
+      prob: 0.5       # 总触发概率（含水平/垂直） (0.0-1.0)
+      hflip_prob: 0.5 # 水平翻转概率（在触发翻转时生效）
+      vflip_prob: 0.3 # 垂直翻转概率（在触发翻转时生效）
+
+    # ---------------- 仿射变换增强配置 ----------------
+    affine:
+      prob: 0.5       # 总触发概率 (0.0-1.0)
+      scale: # 缩放配置
+        x: [0.9, 1.1]  # 宽度缩放系数（0.8=缩至80%）
+        y: [0.9, 1.1]  # 高度缩放系数（1.1=放大至110%）
+      translate: # 平移配置（比例制）
+        x: [-0.0, 0.0] # 水平平移（-0.1=左移10%宽度）
+        y: [-0.0, 0.0]   # 垂直平移（0.1=下移10%高度）
+      rotate: [-90, 90] # 旋转角度（单位：度，负=顺时针）
+      shear: [-5, 5]  # 剪切角度（单位：度）
+
+    # ---------------- 颜色空间增强配置 ----------------
+    color:
+      prob: 0.6       # 总触发概率 (0.0-1.0)
+      hue_shift: [-50, 30]      # 色相偏移（-180~180，HSV色彩空间）
+      saturation_shift: [-50, 50]  # 饱和度偏移（-100~100，负数=降低饱和度）
+      grayscale_alpha: [0.0, 1.0]  # 灰度化系数（0.0=原图，1.0=全灰度）
+      contrast_range: [0.7, 1.5]  # 对比度系数（<1.0=降低对比度，1.0=原图，>1.0增强对比度）
+
+    # ---------------- 噪声与模糊增强配置 ----------------
+    noise:
+      prob: 0.5       # 总触发概率(0.0-1.0)
+      blur_sigma: [0.0, 2.0]     # 高斯模糊强度（单位：像素，数值越大越模糊）
+      gaussian_noise_scale: [0.0, 0.1] # 噪声强度（0.1=25.5像素波动，实际强度=值×255）
+
+###################
+## Data loader options
+train_data_loader:
+  batch_size: 64
+  num_workers: 4
+
+val_data_loader:
+  batch_size: 64
+  num_workers: 4
+
+###################
+## Train params
+train_params:
+  nb_epochs: 35
+  optimizer: 'madgrad'  # 优化器（只做展示使用）
+  scheduler: 'CosineAnnealingWarmRestarts'  # 学习率调度器（只做展示使用）
+  scheduler_period: 32  # 学习率调度器cosine第一个周期包含的epoch数量
+  scheduler_t_mult: 1.41421  # 学习率调度器的周期长度乘数：每个新周期的长度是前一个周期的 T_mult 倍
+  initial_lr: 1e-3  # 初始学习率
+  grad_clip: 0  # 梯度裁剪阈值系数
+  loss_type: 'cr_bce'  # loss损失函数选择，可选：cr_mse、cr_mae、cr_bce、cr_wbce、cr_fl
+  pos_weight: None  # cr_wbce(WeightBCEWithLogitsLoss) 损失函数正样本权重
+  neg_weight: 1  # cr_wbce(WeightBCEWithLogitsLoss) 损失函数负样本权重
+  alpha: 0.25  # cr_fl(FocalLoss) 损失函数中的alpha参数，越大表示越关注少数类
+  gamma: 2  # cr_fl(FocalLoss) 损失函数中的gamma参数，越大表示越关注难分类样本
+  patience: 32  # 早停最大等待轮数，设置为与scheduler_period一致
+  min_delta: 0.0  # 早停最小变化值（1e-4）

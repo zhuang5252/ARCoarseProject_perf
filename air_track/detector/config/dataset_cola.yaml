@@ -1,0 +1,84 @@
+
+# 三种模式
+stage_train: 'train'
+stage_valid: 'val'
+stage_test: 'test'
+
+# 数据集路径及文件类型
+data_dir: '/home/csz_changsha/data/yanqing_data/0506data_processed'
+#data_dir: '/home/csz_changsha/data/yanqing_data/205_data/visible'
+img_folder: 'images'  # 完整路径为data_dir/stage/Images
+label_folder: 'labels'  # 完整路径为data_dir/stage/labels
+
+# 图像和标签类型
+img_format: '.jpg'
+gt_format: '.txt'
+
+# 数据集的划分
+part_train: ['data']
+part_val: ['data']
+part_test: ['data']
+
+# 目标类别
+classes: [
+    'cola',
+    'other'
+]
+# 目标类别数
+nb_classes: 2
+
+#data_dir: '/home/csz_changsha/data/yanqing_data/0506data'
+##data_dir: '/home/csz_changsha/data/yanqing_data/205_data/visible'
+#img_folder: 'images'  # 完整路径为data_dir/stage/Images
+#label_folder: 'labels'  # 完整路径为data_dir/stage/labels
+#
+## 图像和标签类型
+#img_format: '.jpg'
+#gt_format: '.txt'
+#
+## 数据集的划分
+#part_train: ['205-405data_VOC001', '205-405data_VOC002', '205-405data_VOC003', '205-405data_VOC004', '0425data_VOC001', '0425data_VOC002']
+#part_val: ['205-405data_VOC001', '205-405data_VOC002', '205-405data_VOC003', '205-405data_VOC004', '0425data_VOC001', '0425data_VOC002']
+#part_test: ['205-405data_VOC001', '205-405data_VOC002', '205-405data_VOC003', '205-405data_VOC004', '0425data_VOC001', '0425data_VOC002']
+#
+## 目标类别
+#classes: [
+#    'hongniu',
+#    'hongniu-hot',
+#    'kele',
+#    'xuebi',
+#]
+## 目标类别数
+#nb_classes: 4
+
+# 帧对齐保存的pkl文件
+transforms_dir: ''
+
+# dataset中的frames格式
+# 只做展示使用
+frame: {
+    'part',
+    'flight_id',
+    'frame_num',
+    'img_name',
+    'img_path',
+    'have_distance',
+    'img_width',
+    'img_height',
+    'detections',
+}
+# 只做展示使用
+detection: {
+        'target_id',
+        'cls_name',
+        'distance',
+        'is_above_horizon',
+        'cx',
+        'cy',
+        'w',
+        'h',
+    }
+
+# opts
+max_pixel: 255  # 图像像素最大值
+offset_scale: 256.0

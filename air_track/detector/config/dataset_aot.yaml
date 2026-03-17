@@ -1,0 +1,68 @@
+
+# 三种模式
+stage_train: 'train'
+stage_valid: 'val'
+stage_test: 'test'
+
+# 数据集路径及文件类型
+data_dir: '/home/csz_changsha/data/Aot_small_640_512'
+#data_dir: '/mnt/zxc/AOT_Data'
+img_folder: 'Images'  # 完整路径为data_dir/part/Images
+label_file: 'ImageSets/groundtruth.csv'  # 完整路径为data_dir/part/ImageSets
+
+# 图像和标签类型
+img_format: '.png'
+gt_format: '.csv'
+
+# 目标类别
+classes: [
+    'None',
+    'Helicopter1',
+]
+# 目标类别数
+nb_classes: 2
+
+# 帧对齐保存的pkl文件
+transforms_dir: '/home/csz_changsha/PycharmProjects/github/zhuang5252/droneTrack_640x512/aot_inter_res/align_result_aot/frame_transforms'
+#transforms_dir: '/mnt/zxc/csz/droneTrack_640_512/aot_inter_res/align_result_aot/frame_transforms'
+
+
+# 数据集的划分
+part_train: ['part1', 'part2']
+part_val: ['part3']
+part_test: ['part3']
+
+# dataset中的frames格式
+# 只做展示使用
+frame: {
+    'part',
+    'flight_id',
+    'frame_num',
+    'img_name',
+    'img_path',
+    'have_distance',
+    'detections',
+    'error'
+}
+# 只做展示使用
+detection: {
+        'cls_name',
+        'target_id',
+        'distance',
+        'is_above_horizon',
+        'cx',
+        'cy',
+        'w',
+        'h',
+    }
+
+# opts
+max_pixel: 255  # 图像像素最大值
+offset_scale: 256.0
+
+# 筛选想要目标
+filter_flag: True  # 是否筛选目标标志
+target_cls: [Helicopter1]  # 指定类别列表
+range_bbox_w: [26, 54]  # 目标框宽度的范围
+range_bbox_h: [28, 56]  # 目标框高度的范围
+is_above_horizon: -1  # 选择海天线以上、下、所有的目标，None为所有、1为海天线以上、-1为海天线以下

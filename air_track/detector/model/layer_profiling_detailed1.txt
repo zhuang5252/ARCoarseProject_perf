@@ -1,0 +1,154 @@
+========================================================================================================================
+LAYER-WISE PROFILING DETAILED REPORT
+========================================================================================================================
+
+1. Sorted by Time Consumption:
+------------------------------------------------------------------------------------------------------------------------
+Layer Name                               Avg Time (ms)   Memory (MB)     Output (MB)     Calls     
+------------------------------------------------------------------------------------------------------------------------
+base_model                               12.347          600.00          600.00          50        
+base_model.base_model                    9.783           18.75           0.00            50        
+fc_comb                                  2.858           320.00          320.00          50        
+base_model.base_model.layer4             2.339           1.25            1.25            50        
+base_model.base_model.layer3             2.306           2.50            2.50            50        
+base_model.base_model.layer2             2.287           5.00            5.00            50        
+base_model.base_model.layer1             1.937           10.00           10.00           50        
+base_model.base_model.layer4.0           1.258           1.25            1.25            50        
+base_model.base_model.layer2.0           1.249           5.00            5.00            50        
+base_model.base_model.layer3.0           1.243           2.50            2.50            50        
+head                                     1.140           1.88            0.00            50        
+base_model.base_model.layer4.1           0.920           1.25            1.25            50        
+base_model.base_model.layer3.1           0.913           2.50            2.50            50        
+base_model.base_model.layer1.1           0.903           10.00           10.00           50        
+base_model.base_model.layer2.1           0.895           5.00            5.00            50        
+base_model.base_model.layer1.0           0.887           10.00           10.00           50        
+head.fc_size                             0.536           1.25            1.25            50        
+head.fc_mask                             0.454           0.62            0.62            50        
+base_model.base_model.layer3.0.downsample 0.304           2.50            2.50            50        
+base_model.base_model.layer4.0.downsample 0.298           1.25            1.25            50        
+base_model.base_model.layer2.0.downsample 0.294           5.00            5.00            50        
+base_model.base_model.layer4.1.conv1     0.153           1.25            1.25            50        
+base_model.base_model.layer4.0.conv2     0.152           1.25            1.25            50        
+base_model.base_model.layer3.1.conv1     0.140           2.56            2.50            50        
+base_model.base_model.layer4.1.conv2     0.139           1.25            1.25            50        
+base_model.base_model.bn1                0.135           40.00           40.00           50        
+base_model.base_model.layer2.1.conv2     0.135           5.00            5.00            50        
+base_model.base_model.layer2.0.conv2     0.135           5.00            5.00            50        
+base_model.base_model.layer3.1.conv2     0.134           2.56            2.50            50        
+base_model.base_model.layer3.0.conv2     0.133           2.56            2.50            50        
+base_model.base_model.layer2.1.conv1     0.126           5.00            5.00            50        
+base_model.base_model.conv1              0.126           40.00           40.00           50        
+base_model.base_model.layer4.0.conv1     0.123           1.25            1.25            50        
+base_model.base_model.layer1.1.conv1     0.122           10.00           10.00           50        
+base_model.base_model.layer3.0.conv1     0.121           2.56            2.50            50        
+base_model.base_model.layer1.0.conv2     0.119           10.00           10.00           50        
+base_model.base_model.layer1.1.conv2     0.117           10.00           10.00           50        
+base_model.base_model.layer1.0.conv1     0.115           10.00           10.00           50        
+base_model.base_model.layer2.0.conv1     0.111           5.00            5.00            50        
+base_model.base_model.maxpool            0.103           11.00           10.00           50        
+base_model.base_model.relu               0.093           0.00            40.00           50        
+base_model.base_model.layer3.0.downsample.0 0.091           2.56            2.50            50        
+base_model.base_model.layer1.0.bn1       0.086           10.00           10.00           50        
+base_model.base_model.layer2.0.bn2       0.086           5.00            5.00            50        
+base_model.base_model.layer3.1.bn2       0.084           2.50            2.50            50        
+base_model.base_model.layer4.0.downsample.0 0.081           1.25            1.25            50        
+base_model.base_model.layer1.1.bn1       0.078           10.00           10.00           50        
+base_model.base_model.layer2.0.bn1       0.077           5.00            5.00            50        
+base_model.base_model.layer1.0.bn2       0.077           10.00           10.00           50        
+base_model.base_model.layer2.1.bn1       0.075           5.00            5.00            50        
+base_model.base_model.layer3.1.bn1       0.074           2.50            2.50            50        
+base_model.base_model.layer2.0.downsample.1 0.073           5.00            5.00            50        
+base_model.base_model.layer1.1.bn2       0.071           10.00           10.00           50        
+base_model.base_model.layer2.0.downsample.0 0.070           5.00            5.00            50        
+base_model.base_model.layer3.0.relu      0.070           0.00            2.50            100       
+base_model.base_model.layer4.0.bn2       0.070           1.25            1.25            50        
+base_model.base_model.layer4.1.bn2       0.068           1.25            1.25            50        
+base_model.base_model.layer3.0.bn2       0.067           2.50            2.50            50        
+base_model.base_model.layer4.0.bn1       0.067           1.25            1.25            50        
+base_model.base_model.layer3.0.bn1       0.067           2.50            2.50            50        
+base_model.base_model.layer3.0.downsample.1 0.066           2.50            2.50            50        
+base_model.base_model.layer2.1.relu      0.066           0.00            5.00            100       
+base_model.base_model.layer1.1.relu      0.065           0.00            10.00           100       
+base_model.base_model.layer2.1.bn2       0.065           5.00            5.00            50        
+base_model.base_model.layer1.0.relu      0.062           0.00            10.00           100       
+base_model.base_model.layer4.1.relu      0.061           0.00            1.25            100       
+base_model.base_model.layer4.0.relu      0.060           0.00            1.25            100       
+base_model.base_model.layer4.0.downsample.1 0.060           1.25            1.25            50        
+base_model.base_model.layer4.1.bn1       0.060           1.25            1.25            50        
+base_model.base_model.layer2.0.relu      0.059           0.00            5.00            100       
+base_model.base_model.layer3.1.relu      0.059           0.00            2.50            100       
+------------------------------------------------------------------------------------------------------------------------
+TOTAL                                    49.799          1266.31        
+
+
+2. Sorted by Memory Consumption:
+------------------------------------------------------------------------------------------------------------------------
+Layer Name                               Memory (MB)     Time (ms)       Output (MB)    
+------------------------------------------------------------------------------------------------------------------------
+base_model                               600.00          12.347          600.00         
+fc_comb                                  320.00          2.858           320.00         
+base_model.base_model.conv1              40.00           0.126           40.00          
+base_model.base_model.bn1                40.00           0.135           40.00          
+base_model.base_model                    18.75           9.783           0.00           
+base_model.base_model.maxpool            11.00           0.103           10.00          
+base_model.base_model.layer1             10.00           1.937           10.00          
+base_model.base_model.layer1.0           10.00           0.887           10.00          
+base_model.base_model.layer1.0.conv1     10.00           0.115           10.00          
+base_model.base_model.layer1.0.bn1       10.00           0.086           10.00          
+base_model.base_model.layer1.0.conv2     10.00           0.119           10.00          
+base_model.base_model.layer1.0.bn2       10.00           0.077           10.00          
+base_model.base_model.layer1.1           10.00           0.903           10.00          
+base_model.base_model.layer1.1.conv1     10.00           0.122           10.00          
+base_model.base_model.layer1.1.bn1       10.00           0.078           10.00          
+base_model.base_model.layer1.1.conv2     10.00           0.117           10.00          
+base_model.base_model.layer1.1.bn2       10.00           0.071           10.00          
+base_model.base_model.layer2             5.00            2.287           5.00           
+base_model.base_model.layer2.0           5.00            1.249           5.00           
+base_model.base_model.layer2.0.conv1     5.00            0.111           5.00           
+base_model.base_model.layer2.0.bn1       5.00            0.077           5.00           
+base_model.base_model.layer2.0.conv2     5.00            0.135           5.00           
+base_model.base_model.layer2.0.bn2       5.00            0.086           5.00           
+base_model.base_model.layer2.0.downsample 5.00            0.294           5.00           
+base_model.base_model.layer2.0.downsample.0 5.00            0.070           5.00           
+base_model.base_model.layer2.0.downsample.1 5.00            0.073           5.00           
+base_model.base_model.layer2.1           5.00            0.895           5.00           
+base_model.base_model.layer2.1.conv1     5.00            0.126           5.00           
+base_model.base_model.layer2.1.bn1       5.00            0.075           5.00           
+base_model.base_model.layer2.1.conv2     5.00            0.135           5.00           
+
+
+3. Analysis by Module Type:
+------------------------------------------------------------------------------------------------------------------------
+Module Type          Total Time (ms) Avg Time (ms)   Total Memory (MB) Count     
+------------------------------------------------------------------------------------------------------------------------
+base_model           22.13           11.06           618.75          2         
+0                    4.88            0.70            27.56           7         
+1                    3.83            0.55            27.50           7         
+fc_comb              2.86            2.86            320.00          1         
+layer4               2.34            2.34            1.25            1         
+layer3               2.31            2.31            2.50            1         
+layer2               2.29            2.29            5.00            1         
+layer1               1.94            1.94            10.00           1         
+head                 1.14            1.14            1.88            1         
+conv1                1.14            0.13            77.62           9         
+conv2                1.06            0.13            37.62           8         
+downsample           0.90            0.30            8.75            3         
+bn1                  0.72            0.08            77.50           9         
+relu                 0.60            0.07            0.00            9         
+bn2                  0.59            0.07            37.50           8         
+fc_size              0.54            0.54            1.25            1         
+fc_mask              0.45            0.45            0.62            1         
+maxpool              0.10            0.10            11.00           1         
+
+
+4. GPU Information:
+------------------------------------------------------------------------------------------------------------------------
+CUDA Available: True
+GPU Device: NVIDIA GeForce RTX 4090
+Current Memory Allocated: 47.17 MB
+Max Memory Allocated: 1289.05 MB
+Total GPU Memory: 23.62 GB
+
+========================================================================================================================
+End of Report
+========================================================================================================================

@@ -1,0 +1,111 @@
+{
+  "part_train": {
+    "20260115_tmg_M300_afternoon_background_merge/train": {
+      "nums": 1000,
+      "shuffle": true
+    },
+    "20260115_tmg_M300_afternoon_merge/train": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "20260115_tmg_M300_afternoon_merge_aug/train": {
+      "nums": 500000000000,
+      "shuffle": true
+    },
+    "20260115_tmg_M300_night_background/train": {
+      "nums": 1000,
+      "shuffle": true
+    },
+    "20260115_tmg_M300_night_merge/train": {
+      "nums": 50000000000,
+      "shuffle": true
+    },
+    "20260115_tmg_M300_night_merge_aug/train": {
+      "nums": 5000000000,
+      "shuffle": true
+    },
+    "20260119_tmg_M300_afternoon_merge/train": {
+      "nums": 5000000000,
+      "shuffle": true
+    },
+    "20260119_tmg_M300_afternoon_merge_aug/train": {
+      "nums": 5000000000,
+      "shuffle": true
+    },
+    "20260119_tmg_M300_night_merge/train": {
+      "nums": 5000000000,
+      "shuffle": true
+    },
+    "20260119_tmg_M300_night_merge_aug/train": {
+      "nums": 5000000000,
+      "shuffle": true
+    },
+    "20260119_tmg_M300_afternoon_background_error/train": {
+      "nums": 5000000000,
+      "shuffle": true
+    },
+    "20260119_tmg_M300_afternoon_background_merge/train": {
+      "nums": 5000000000,
+      "shuffle": true
+    },
+    "20260119_tmg_M300_night_background_error/train": {
+      "nums": 5000000000,
+      "shuffle": true
+    },
+    "20260119_tmg_M300_night_background_merge/train": {
+      "nums": 5000000000,
+      "shuffle": true
+    }
+  },
+  "part_val": {
+    "20260115_tmg_M300_afternoon_background_merge/val": {
+      "nums": 300,
+      "shuffle": true
+    },
+    "20260115_tmg_M300_afternoon_merge/val": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "20260115_tmg_M300_afternoon_merge_aug/val": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "20260115_tmg_M300_night_background/val": {
+      "nums": 300,
+      "shuffle": true
+    },
+    "20260115_tmg_M300_night_merge/val": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "20260115_tmg_M300_night_merge_aug/val": {
+      "nums": 10000000000,
+      "shuffle": true
+    },
+    "20260119_tmg_M300_afternoon_merge/val": {
+      "nums": 5000000000,
+      "shuffle": true
+    },
+    "20260119_tmg_M300_afternoon_merge_aug/val": {
+      "nums": 5000000000,
+      "shuffle": true
+    },
+    "20260119_tmg_M300_night_merge/val": {
+      "nums": 5000000000,
+      "shuffle": true
+    },
+    "20260119_tmg_M300_night_merge_aug/val": {
+      "nums": 5000000000,
+      "shuffle": true
+    },
+    "20260119_tmg_M300_afternoon_background_merge/val": {
+      "nums": 5000000000,
+      "shuffle": true
+    },
+    "20260119_tmg_M300_night_background_merge/val": {
+      "nums": 5000000000,
+      "shuffle": true
+    }
+  },
+  "part_test": {}
+}

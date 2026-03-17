@@ -1,0 +1,73 @@
+
+{
+  "JDModel_Predict":
+  {
+    "mode": "JDModel_Predict",
+    "width": 640,
+    "height": 360,
+    "engine_file_name": "0813_JD_epoch_14.trt",
+    "data_dir": "/dataset",
+    "output_dir": "JDModel_Predict",
+    "use_visible": 1,
+    "use_infrared": 0,
+    "save_img": true,
+    "save_txt": true,
+    "execute_command": "./x2_test",
+    "parts":
+    {
+      "0611":
+      {
+        "nums": 350,
+        "shuffle": true,
+        "input_scale": 0.33
+      },
+      "0615":
+      {
+        "nums": 350,
+        "shuffle": true,
+        "input_scale": 0.33
+      },
+      "0715_T18_no_background":
+      {
+        "nums": 10000000,
+        "shuffle": false,
+        "input_scale": 0.46
+      }
+    }
+  },
+  "T18Model_Predict":
+  {
+    "mode": "T18Model_Predict",
+    "width": 768,
+    "height": 576,
+    "engine_file_name": "0813_T18_epoch_11.trt",
+    "data_dir": "/dataset",
+    "output_dir": "T18Model_Predict",
+    "use_visible": 1,
+    "use_infrared": 0,
+    "save_img": true,
+    "save_txt": true,
+    "execute_command": "./x2_test",
+    "parts":
+    {
+      "0611":
+      {
+        "nums": 350,
+        "shuffle": true,
+        "input_scale": 0.4
+      },
+      "0615":
+      {
+        "nums": 350,
+        "shuffle": true,
+        "input_scale": 0.4
+      },
+      "0715_T18_no_background":
+      {
+        "nums": 10000000,
+        "shuffle": false,
+        "input_scale": 0.75
+      }
+    }
+  }
+}
