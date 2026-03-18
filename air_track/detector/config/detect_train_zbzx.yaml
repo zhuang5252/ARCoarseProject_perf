@@ -17,6 +17,19 @@ model_params:
   input_channel: 1  # 模型输入通道数实际为 input_frames * input_channel，需要与下方dataset_params中的img_read_method保持一致
   combine_outputs_dim: 512  # Model中fc_comb输出的特征通道数
   combine_outputs_kernel: 1  # Model中fc_comb的kernel_size
+  # 新增优化/多头配置
+  reduce_stage_ch: -1  # 若>0，则在每个stage上做1x1投影到该通道数后再上采样（减小concat后通道）
+  combine_type: 'conv'  # fc_comb默认类型：'conv' 或 'light'
+  reduce_ch: 128  # light模式下中间通道数
+  multi_head: False  # 是否启用 multi-head（high-res + low-res）
+  high_head_name: 'Head_5_Output'  # high-res 小目标 head 名称
+  low_head_name: 'Head_3_Output'   # low-res 中大目标 head 名称
+  combine_type_high: 'light'
+  combine_type_low: 'conv'
+  reduce_ch_high: 64
+  reduce_ch_low: 128
+  combine_outputs_dim_high: 256
+  combine_outputs_dim_low: 256
   output_binary_mask: True  # 输出二进制掩码
   down_scale: 2   # 根据模型修改(模型输入512×640，输出256×320，下采样比例为2)
   nb_classes: 5  # 类别数
