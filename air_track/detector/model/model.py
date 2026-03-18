@@ -10,9 +10,10 @@ from air_track.utils import auto_import_module, combine_load_cfg_yaml
 
 
 class LightCombine(nn.Module):
-    """轻量化的 combine 模块：先 1x1 降通道 -> depthwise 3x3 -> pointwise 1x1 恢复/输出
+    """Lightweight "combine" module: 1x1 reduce -> depthwise 3x3 -> pointwise 1x1 restore/output
 
-    用于代替大尺度的单层 1x1 conv（在高分辨率上代价高）
+    轻量化的 combine 模块：先 1x1 降通道 -> depthwise 3x3 -> pointwise 1x1 恢复/输出
+    This is used to replace a large single 1x1 conv (which is expensive at high res).
     """
 
     def __init__(self, in_ch: int, reduce_ch: int = 128, out_ch: int = 512):
@@ -32,11 +33,13 @@ class LightCombine(nn.Module):
 
 
 class Model(nn.Module):
-    """可配置的深度学习模型框架，支持多种backbone和head组合
+    """Configurable model framework that supports multiple backbone/head combinations.
+
+    可配置的深度学习模型框架，支持多种 backbone 和 head 组合。
 
     Args:
-        cfg (Dict): 配置字典，包含模型结构参数
-        pretrained (bool): 是否加载预训练权重
+        cfg (Dict): 配置字典，包含模型结构参数 (config dictionary containing model structure parameters)
+        pretrained (bool): 是否加载预训练权重 (whether to load pretrained weights)
     """
 
     def __init__(self, cfg: Dict, pretrained: bool = False):
@@ -50,6 +53,7 @@ class Model(nn.Module):
         self.base_model = self._build_backbone()
 
         # 支持 multi-head 配置：high-res head（用于小目标）与 low-res head（用于中/大目标）
+        # Support multi-head: high-res head for small objects, low-res head for medium/large objects
         if self.cfg.get('multi_head', False):
             # high head params
             combine_type_high = self.cfg.get('combine_type_high', self.cfg.get('combine_type', 'light'))
