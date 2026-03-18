@@ -270,12 +270,15 @@ class OfficialResNet(nn.Module):
         input_ch = cfg['input_channel'] * cfg['input_frames']  # 2
         self.down_scale = int(cfg['down_scale'])
         self.combine_outputs_dim = cfg.get('combine_outputs_dim', -1)  # 512
-        # 上采样设置（用于不同TensorRT/Orin性能/精度权衡）
+
+        # 上采样设置（用于在 TensorRT/Orin 上做速度 vs 质量的权衡）
+        # Upsampling options (for trading off speed vs. quality on TensorRT/Orin)
         self.upsample_mode = cfg.get('upsample_mode', 'bilinear')  # 'bilinear' or 'nearest'
-        self.upsample_post_conv = cfg.get('upsample_post_conv', False)  # nearest后做小卷积修正
-        self.upsample_post_conv_kernel = cfg.get('upsample_post_conv_kernel', 3)
+        self.upsample_post_conv = cfg.get('upsample_post_conv', False)  # nearest 后是否加小卷积做修正 (improve nearest quality)
+        self.upsample_post_conv_kernel = cfg.get('upsample_post_conv_kernel', 3)  # 上采样后卷积核大小 (kernel size after upsample)
+
         # 可选：在上采样前对每个stage做通道降维以减少上采样/concat后的内存和计算开销
-        # 若设置为 >0，则表示把每个stage投影到该通道数再上采样
+        # If >0, project each stage to this channel count before upsampling (reduces concat channel size)
         self.reduce_stage_ch = cfg.get('reduce_stage_ch', -1)
         num_classes = cfg['nb_classes']
         input_channel = cfg['input_channel'] * cfg['input_frames']
@@ -309,7 +312,9 @@ class OfficialResNet(nn.Module):
                 for item in stages_output:
                     self.output_channels += item.size(1)
 
-            # 如果配置了 upsample_post_conv，则在上采样后加一个轻量卷积修正（提高nearest表现）
+            # 如果配置了 upsample_post_conv，则在上采样后加一个轻量卷积修正（提高 nearest 的表现）
+            # If upsample_post_conv is enabled, append a lightweight conv to refine the upsampled feature.
+            # This is especially useful when upsample_mode='nearest' since nearest can be blocky.
             if self.upsample_post_conv:
                 post_conv_list = []
                 for idx, ch in enumerate(self.stage_channels):
