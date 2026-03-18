@@ -9,6 +9,28 @@ from air_track.utils.registry import BACKBONES, HEADS
 from air_track.utils import auto_import_module, combine_load_cfg_yaml
 
 
+class LightCombine(nn.Module):
+    """轻量化的 combine 模块：先 1x1 降通道 -> depthwise 3x3 -> pointwise 1x1 恢复/输出
+
+    用于代替大尺度的单层 1x1 conv（在高分辨率上代价高）
+    """
+
+    def __init__(self, in_ch: int, reduce_ch: int = 128, out_ch: int = 512):
+        super().__init__()
+        self.reduce = nn.Conv2d(in_ch, reduce_ch, kernel_size=1)
+        self.relu = nn.ReLU()
+        self.dw = nn.Conv2d(reduce_ch, reduce_ch, kernel_size=3, padding=1, groups=reduce_ch)
+        self.pw = nn.Conv2d(reduce_ch, out_ch, kernel_size=1)
+
+    def forward(self, x):
+        x = self.reduce(x)
+        x = self.relu(x)
+        x = self.dw(x)
+        x = self.relu(x)
+        x = self.pw(x)
+        return x
+
+
 class Model(nn.Module):
     """可配置的深度学习模型框架，支持多种backbone和head组合
 
@@ -26,8 +48,33 @@ class Model(nn.Module):
 
         # 模型组件初始化
         self.base_model = self._build_backbone()
-        self.fc_comb = self._build_combine()
-        self.head = self._build_head()
+
+        # 支持 multi-head 配置：high-res head（用于小目标）与 low-res head（用于中/大目标）
+        if self.cfg.get('multi_head', False):
+            # high head params
+            combine_type_high = self.cfg.get('combine_type_high', self.cfg.get('combine_type', 'light'))
+            reduce_ch_high = int(self.cfg.get('reduce_ch_high', self.cfg.get('reduce_ch', 128)))
+            combine_out_high = int(self.cfg.get('combine_outputs_dim_high', self.cfg.get('combine_outputs_dim', 512)))
+            high_head_name = self.cfg.get('high_head_name', self.cfg.get('head_name'))
+
+            # low head params
+            combine_type_low = self.cfg.get('combine_type_low', self.cfg.get('combine_type', 'conv'))
+            reduce_ch_low = int(self.cfg.get('reduce_ch_low', self.cfg.get('reduce_ch', 128)))
+            combine_out_low = int(self.cfg.get('combine_outputs_dim_low', self.cfg.get('combine_outputs_dim', 512)))
+            low_head_name = self.cfg.get('low_head_name', self.cfg.get('head_name'))
+
+            # build combines and heads
+            self.fc_comb_high = self._build_combine_for(self.base_model.output_channels, combine_out_high, combine_type_high, reduce_ch_high)
+            self.head_high = heads.__dict__[high_head_name](in_ch=combine_out_high, cls_num=self.cfg['nb_classes'], mode=self.cfg['model_mode'])
+
+            self.fc_comb_low = self._build_combine_for(self.base_model.output_channels, combine_out_low, combine_type_low, reduce_ch_low)
+            self.head_low = heads.__dict__[low_head_name](in_ch=combine_out_low, cls_num=self.cfg['nb_classes'], mode=self.cfg['model_mode'])
+
+            # record output channels for training utilities
+            self.output_channels = combine_out_high + combine_out_low
+        else:
+            self.fc_comb = self._build_combine()
+            self.head = self._build_head()
 
         # 微调模式处理
         if cfg.get('finetune', False):
@@ -71,16 +118,36 @@ class Model(nn.Module):
         """
         base_model_output_channels = self.base_model.output_channels
         self.combine_outputs_dim = self.cfg.get('combine_outputs_dim', -1)
+        combine_type = self.cfg.get('combine_type', 'conv')  # 'conv' or 'light'
+        reduce_ch = int(self.cfg.get('reduce_ch', 128))
 
         if self.combine_outputs_dim > 0:
             self.output_channels = self.combine_outputs_dim
-            combine_outputs_kernel = 1
-            fc_comb = nn.Conv2d(base_model_output_channels, self.combine_outputs_dim,
-                                kernel_size=combine_outputs_kernel)
+            if combine_type == 'light':
+                fc_comb = LightCombine(base_model_output_channels, reduce_ch=reduce_ch, out_ch=self.combine_outputs_dim)
+            else:
+                combine_outputs_kernel = 1
+                fc_comb = nn.Conv2d(base_model_output_channels, self.combine_outputs_dim,
+                                    kernel_size=combine_outputs_kernel)
             return fc_comb
         else:
             self.output_channels = base_model_output_channels
             return None
+
+    def _build_combine_for(self, in_ch: int, out_ch: int, combine_type: str = 'conv', reduce_ch: int = 128) -> Optional[nn.Module]:
+        """构建指定输入输出通道和类型的 combine 模块，可用于 multi-head 场景
+
+        Args:
+            in_ch: 输入通道数
+            out_ch: 输出通道数
+            combine_type: 'conv' 或 'light'
+            reduce_ch: light 模式下的中间通道
+        """
+        if out_ch <= 0:
+            return None
+        if combine_type == 'light':
+            return LightCombine(in_ch, reduce_ch=reduce_ch, out_ch=out_ch)
+        return nn.Conv2d(in_ch, out_ch, kernel_size=1)
 
     def _build_head(self) -> nn.Module:
         """构建模型输出头
@@ -350,6 +417,29 @@ class Model(nn.Module):
         """
         features = self.base_model(inputs)
 
+        # multi-head forward: return dict with 'high' and 'low' outputs
+        if self.cfg.get('multi_head', False):
+            # high-res branch (operate on full-resolution combined features)
+            if getattr(self, 'fc_comb_high', None) is not None:
+                high_feat = F.relu(self.fc_comb_high(features))
+            else:
+                high_feat = features
+            high_out = self.head_high(high_feat)
+
+            # low-res branch: downsample spatially then apply combine/head
+            # 使用简单的 2x 下采样，若需要可在 cfg 中配置
+            low_in = F.adaptive_avg_pool2d(features, (features.shape[2] // 2, features.shape[3] // 2))
+            if getattr(self, 'fc_comb_low', None) is not None:
+                low_feat = F.relu(self.fc_comb_low(low_in))
+            else:
+                low_feat = low_in
+            low_out = self.head_low(low_feat)
+
+            if self.cfg.get('return_feature_map'):
+                return {'high': high_out, 'low': low_out}, {'high': high_feat, 'low': low_feat}
+            return {'high': high_out, 'low': low_out}
+
+        # single-head (原有逻辑)
         if self.fc_comb is not None:
             features = F.relu(self.fc_comb(features))
 

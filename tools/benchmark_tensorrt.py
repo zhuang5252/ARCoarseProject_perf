@@ -9,6 +9,12 @@
 import argparse
 import time
 import numpy as np
+import os
+
+try:
+    import cv2
+except Exception:
+    cv2 = None
 
 try:
     import tensorrt as trt
@@ -109,6 +115,64 @@ def infer_context(engine, inputs, outputs, bindings, stream, context, iters=200,
     return avg_ms
 
 
+def infer_images(engine, inputs, outputs, bindings, stream, context, image_paths, img_h, img_w, img_ch):
+    # image_paths: list of image file paths
+    # assumes batch=1
+    if cv2 is None:
+        raise RuntimeError('opencv-python is required for image inference mode')
+
+    times = []
+
+    # Try to set binding shape if dynamic
+    try:
+        # find input binding index
+        for i in range(engine.num_bindings):
+            if engine.binding_is_input(i):
+                context.set_binding_shape(i, (1, img_ch, img_h, img_w))
+                break
+    except Exception:
+        pass
+
+    for img_path in image_paths:
+        img = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
+        if img is None:
+            continue
+        # convert channels
+        if img_ch == 1:
+            if len(img.shape) == 3:
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        else:
+            if len(img.shape) == 2:
+                img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+            else:
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+        img = cv2.resize(img, (img_w, img_h), interpolation=cv2.INTER_LINEAR)
+        # HWC -> CHW, normalize to 0-1
+        if img_ch == 1:
+            arr = img.astype(np.float32) / 255.0
+            arr = np.expand_dims(arr, axis=0)
+        else:
+            arr = img.astype(np.float32) / 255.0
+            arr = np.transpose(arr, (2, 0, 1))
+
+        # copy to host buffer
+        inp = inputs[0]
+        np.copyto(inp['host'], arr.ravel())
+        cuda.memcpy_htod_async(inp['device'], inp['host'], stream)
+
+        t0 = time.perf_counter()
+        context.execute_async_v2(bindings=bindings, stream_handle=stream.handle)
+        cuda.Context.synchronize()
+        t1 = time.perf_counter()
+        times.append((t1 - t0) * 1000.0)
+
+    if len(times) == 0:
+        return None
+    times = np.array(times)
+    return float(times.mean()), float(times.std()), int(len(times))
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--onnx', required=True, help='input ONNX model')
@@ -116,6 +180,10 @@ def main():
     parser.add_argument('--batch', type=int, default=1)
     parser.add_argument('--iters', type=int, default=200)
     parser.add_argument('--warmup', type=int, default=20)
+    parser.add_argument('--image_dir', default=None, help='optional: directory of images to run per-image latency (batch=1)')
+    parser.add_argument('--img_h', type=int, default=None, help='image height for resize when using --image_dir')
+    parser.add_argument('--img_w', type=int, default=None, help='image width for resize when using --image_dir')
+    parser.add_argument('--img_ch', type=int, default=None, help='image channels (1 or 3) when using --image_dir')
     args = parser.parse_args()
 
     print('Building engine (this may take some time)...')
@@ -125,8 +193,24 @@ def main():
 
     inputs, outputs, bindings, stream = allocate_buffers(engine)
 
-    avg_ms = infer_context(engine, inputs, outputs, bindings, stream, context, iters=args.iters, warmup=args.warmup)
-    print('Average latency: %.3f ms (batch=%d, precision=%s)' % (avg_ms, args.batch, args.precision))
+    if args.image_dir is not None:
+        # collect image files
+        exts = ['.jpg', '.jpeg', '.png', '.bmp', '.tif', '.tiff']
+        image_paths = [os.path.join(args.image_dir, f) for f in sorted(os.listdir(args.image_dir)) if os.path.splitext(f)[1].lower() in exts]
+        if len(image_paths) == 0:
+            print('No images found in', args.image_dir)
+            return
+        if args.img_h is None or args.img_w is None or args.img_ch is None:
+            raise ValueError('When --image_dir is set, you must provide --img_h --img_w --img_ch')
+        res = infer_images(engine, inputs, outputs, bindings, stream, context, image_paths, args.img_h, args.img_w, args.img_ch)
+        if res is None:
+            print('No valid images processed')
+        else:
+            mean_ms, std_ms, count = res
+            print('Image dataset latency: mean=%.3f ms std=%.3f ms count=%d (precision=%s)' % (mean_ms, std_ms, count, args.precision))
+    else:
+        avg_ms = infer_context(engine, inputs, outputs, bindings, stream, context, iters=args.iters, warmup=args.warmup)
+        print('Average latency: %.3f ms (batch=%d, precision=%s)' % (avg_ms, args.batch, args.precision))
 
 
 if __name__ == '__main__':
