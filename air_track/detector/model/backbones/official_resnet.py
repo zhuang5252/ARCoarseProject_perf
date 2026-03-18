@@ -270,9 +270,13 @@ class OfficialResNet(nn.Module):
         input_ch = cfg['input_channel'] * cfg['input_frames']  # 2
         self.down_scale = int(cfg['down_scale'])
         self.combine_outputs_dim = cfg.get('combine_outputs_dim', -1)  # 512
+        # 上采样设置（用于不同TensorRT/Orin性能/精度权衡）
+        self.upsample_mode = cfg.get('upsample_mode', 'bilinear')  # 'bilinear' or 'nearest'
+        self.upsample_post_conv = cfg.get('upsample_post_conv', False)  # nearest后做小卷积修正
+        self.upsample_post_conv_kernel = cfg.get('upsample_post_conv_kernel', 3)
         # 可选：在上采样前对每个stage做通道降维以减少上采样/concat后的内存和计算开销
         # 若设置为 >0，则表示把每个stage投影到该通道数再上采样
-        self.reduce_stage_ch = 128
+        self.reduce_stage_ch = cfg.get('reduce_stage_ch', -1)
         num_classes = cfg['nb_classes']
         input_channel = cfg['input_channel'] * cfg['input_frames']
 
@@ -305,6 +309,21 @@ class OfficialResNet(nn.Module):
                 for item in stages_output:
                     self.output_channels += item.size(1)
 
+            # 如果配置了 upsample_post_conv，则在上采样后加一个轻量卷积修正（提高nearest表现）
+            if self.upsample_post_conv:
+                post_conv_list = []
+                for idx, ch in enumerate(self.stage_channels):
+                    out_ch = self.reduce_stage_ch if (self.stage_proj is not None and self.reduce_stage_ch > 0) else ch
+                    post_conv_list.append(nn.Sequential(
+                        nn.Conv2d(out_ch, out_ch, kernel_size=self.upsample_post_conv_kernel,
+                                  padding=self.upsample_post_conv_kernel // 2, bias=False),
+                        nn.BatchNorm2d(out_ch),
+                        nn.ReLU(inplace=True),
+                    ))
+                self.stage_post_conv = nn.ModuleList(post_conv_list)
+            else:
+                self.stage_post_conv = None
+
     def forward(self, inputs):
         b, c, h, w = inputs.shape
         h = h // self.down_scale
@@ -322,19 +341,22 @@ class OfficialResNet(nn.Module):
 
         # 对应hrnet网咯四层的特征
         x = []
+        mode = self.upsample_mode if hasattr(self, 'upsample_mode') else 'bilinear'
         # 如果配置了 stage 投影（先降通道再上采样），优先使用投影后的特征以减少内存和计算
         if hasattr(self, 'stage_proj') and self.stage_proj is not None:
             for idx, feat in enumerate(stages_output):
                 proj = self.stage_proj[idx](feat)
-                x.append(F.interpolate(proj, size=output_size, mode="bilinear"))
+                up = F.interpolate(proj, size=output_size, mode=mode)
+                if self.stage_post_conv is not None:
+                    up = self.stage_post_conv[idx](up)
+                x.append(up)
         else:
-            # 上采样，特征每个维度×2，bilinear使用双线性插值
-            x = [
-                F.interpolate(stages_output[0], size=output_size, mode="bilinear"),
-                F.interpolate(stages_output[1], size=output_size, mode="bilinear"),
-                F.interpolate(stages_output[2], size=output_size, mode="bilinear"),
-                F.interpolate(stages_output[3], size=output_size, mode="bilinear"),
-            ]
+            # 上采样，特征每个维度×2
+            for idx, feat in enumerate(stages_output):
+                up = F.interpolate(feat, size=output_size, mode=mode)
+                if self.stage_post_conv is not None:
+                    up = self.stage_post_conv[idx](up)
+                x.append(up)
 
         # 特征拼接
         x = torch.cat(x, dim=1)

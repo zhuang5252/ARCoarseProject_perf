@@ -19,6 +19,9 @@ model_params:
   combine_outputs_kernel: 1  # Model中fc_comb的kernel_size
   # 新增优化/多头配置
   reduce_stage_ch: -1  # 若>0，则在每个stage上做1x1投影到该通道数后再上采样（减小concat后通道）
+  upsample_mode: 'bilinear'  # 上采样模式: 'bilinear' 或 'nearest'
+  upsample_post_conv: False  # 上采样后是否做额外的卷积修正（可提升nearest的表现）
+  upsample_post_conv_kernel: 3  # 上采样后卷积核大小
   combine_type: 'conv'  # fc_comb默认类型：'conv' 或 'light'
   reduce_ch: 128  # light模式下中间通道数
   multi_head: False  # 是否启用 multi-head（high-res + low-res）
