@@ -270,6 +270,9 @@ class OfficialResNet(nn.Module):
         input_ch = cfg['input_channel'] * cfg['input_frames']  # 2
         self.down_scale = int(cfg['down_scale'])
         self.combine_outputs_dim = cfg.get('combine_outputs_dim', -1)  # 512
+        # 可选：在上采样前对每个stage做通道降维以减少上采样/concat后的内存和计算开销
+        # 若设置为 >0，则表示把每个stage投影到该通道数再上采样
+        self.reduce_stage_ch = 128
         num_classes = cfg['nb_classes']
         input_channel = cfg['input_channel'] * cfg['input_frames']
 
@@ -285,10 +288,22 @@ class OfficialResNet(nn.Module):
             dummy_input = torch.randn(1, input_ch, img_size, img_size)
             stages_output = self.base_model(dummy_input)
 
-            # 自动获取每层的通道数
-            self.output_channels = 0
-            for item in stages_output:
-                self.output_channels += item.size(1)
+            # 自动获取每层的通道数并可选创建每层的降通道投影
+            self.stage_channels = [int(item.size(1)) for item in stages_output]
+            # 如果配置了 reduce_stage_ch (>0)，则为每个 stage 创建 1x1 投影
+            if self.reduce_stage_ch and self.reduce_stage_ch > 0:
+                proj_list = []
+                for ch in self.stage_channels:
+                    proj_list.append(nn.Conv2d(ch, self.reduce_stage_ch, kernel_size=1))
+                self.stage_proj = nn.ModuleList(proj_list)
+                # 输出通道为每个投影后的通道和
+                self.output_channels = self.reduce_stage_ch * len(self.stage_channels)
+            else:
+                self.stage_proj = None
+                # 自动获取每层的通道数
+                self.output_channels = 0
+                for item in stages_output:
+                    self.output_channels += item.size(1)
 
     def forward(self, inputs):
         b, c, h, w = inputs.shape
@@ -306,13 +321,20 @@ class OfficialResNet(nn.Module):
         """
 
         # 对应hrnet网咯四层的特征
-        x = [
+        x = []
+        # 如果配置了 stage 投影（先降通道再上采样），优先使用投影后的特征以减少内存和计算
+        if hasattr(self, 'stage_proj') and self.stage_proj is not None:
+            for idx, feat in enumerate(stages_output):
+                proj = self.stage_proj[idx](feat)
+                x.append(F.interpolate(proj, size=output_size, mode="bilinear"))
+        else:
             # 上采样，特征每个维度×2，bilinear使用双线性插值
-            F.interpolate(stages_output[0], size=output_size, mode="bilinear"),  # torch.Size([2, 64, 512, 512])
-            F.interpolate(stages_output[1], size=output_size, mode="bilinear"),  # torch.Size([2, 128, 512, 512])
-            F.interpolate(stages_output[2], size=output_size, mode="bilinear"),  # torch.Size([2, 256, 512, 512])
-            F.interpolate(stages_output[3], size=output_size, mode="bilinear"),  # torch.Size([2, 512, 512, 512])
-        ]
+            x = [
+                F.interpolate(stages_output[0], size=output_size, mode="bilinear"),
+                F.interpolate(stages_output[1], size=output_size, mode="bilinear"),
+                F.interpolate(stages_output[2], size=output_size, mode="bilinear"),
+                F.interpolate(stages_output[3], size=output_size, mode="bilinear"),
+            ]
 
         # 特征拼接
         x = torch.cat(x, dim=1)
@@ -324,7 +346,7 @@ if __name__ == '__main__':
     # 获取当前脚本所在的绝对路径
     script_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-    train_yaml = os.path.join(script_dir, 'config/classify_train.yaml')
+    train_yaml = os.path.join(script_dir, '/home/csz_xishu2/PycharmProjects/github/zhuang5252/ARCoarseProject/air_track/detector/config/detect_train_zbzx.yaml')
 
     # 读取yaml文件
     yaml_list = [train_yaml]
@@ -332,5 +354,5 @@ if __name__ == '__main__':
     cfg_data = combine_load_cfg_yaml(yaml_paths_list=yaml_list)
     model = OfficialResNet(cfg_data['model_params'])
 
-    output = model(torch.zeros((2, 2, 16, 16)))
+    output = model(torch.zeros((2, 1, 512, 640)))
     print()
